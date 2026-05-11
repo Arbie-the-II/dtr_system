@@ -1,0 +1,1656 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 29, 2026 at 06:45 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `ojt_timesheet_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `daily_pictures`
+--
+
+CREATE TABLE `daily_pictures` (
+  `id` int(11) NOT NULL,
+  `intern_id` int(11) NOT NULL,
+  `picture_date` date NOT NULL,
+  `picture_time` time NOT NULL,
+  `picture_type` enum('am_timein','am_timeout','pm_timein','pm_timeout') NOT NULL,
+  `image_path` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `face_captures`
+--
+
+CREATE TABLE `face_captures` (
+  `id` int(11) NOT NULL,
+  `intern_id` int(11) NOT NULL,
+  `record_id` int(11) DEFAULT NULL,
+  `image_path` varchar(255) NOT NULL,
+  `action` varchar(50) NOT NULL COMMENT 'time_in, time_out, pause',
+  `capture_time` time NOT NULL,
+  `created_at` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `interns`
+--
+
+CREATE TABLE `interns` (
+  `Intern_id` int(11) NOT NULL,
+  `Intern_Name` varchar(255) DEFAULT NULL,
+  `Intern_School` varchar(255) NOT NULL,
+  `Intern_BirthDay` date NOT NULL,
+  `Intern_Age` int(255) NOT NULL,
+  `Intern_Gender` varchar(255) NOT NULL,
+  `Required_Hours_Rendered` int(255) NOT NULL,
+  `Face_Registered` tinyint(1) DEFAULT 0,
+  `Face_Image_Path` varchar(255) NOT NULL,
+  `project_assigned` varchar(255) DEFAULT NULL,
+  `supervisor` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `interns`
+--
+
+INSERT INTO `interns` (`Intern_id`, `Intern_Name`, `Intern_School`, `Intern_BirthDay`, `Intern_Age`, `Intern_Gender`, `Required_Hours_Rendered`, `Face_Registered`, `Face_Image_Path`, `project_assigned`, `supervisor`) VALUES
+(52, 'MARBAN, JOPHEL V.', 'ZPPSU', '2003-03-23', 22, 'Male', 486, 1, 'face_52_1770162210.png', NULL, NULL),
+(53, 'IDJAD, NURJAN N.', 'ZPPSU', '2001-07-17', 24, 'Male', 486, 1, 'face_53_1770162363.png', NULL, NULL),
+(56, 'TALAB, PRINCESS WENDY T.', 'ZPPSU', '2003-06-01', 22, 'Female', 486, 1, 'face_56_1770163569.png', NULL, NULL),
+(57, 'FLORES, DESSA M. ', 'ZPPSU', '2003-03-07', 22, 'Female', 486, 1, 'face_57_1770163648.png', NULL, NULL),
+(58, 'MANLIN, KAYCEE N', 'ZPPSU', '2003-09-12', 22, 'Female', 486, 1, 'face_58_1770163746.png', NULL, NULL),
+(59, 'MACAPAGAL MICKAEL ANTHONY A', 'ZPPSU', '2003-12-10', 22, 'Male', 486, 1, 'face_59_1770163844.png', NULL, NULL),
+(60, 'Paul Antony J. Mazo', 'ZPPSU', '2000-08-20', 25, 'Male', 540, 1, 'face_60_1771374264.png', NULL, NULL),
+(61, 'JAY RYAN R. BARTULIN', 'ZPPSU', '2003-05-09', 22, 'Male', 54, 1, 'face_61_1771374469.png', NULL, NULL),
+(62, 'KASAN, PRINCE NEIL L.', 'ZPPSU', '2002-02-25', 23, 'Male', 540, 1, 'face_62_1771374609.png', NULL, NULL),
+(63, 'SAQUIN, NORMAN S.', 'ZPPSU', '2001-07-24', 24, 'Male', 540, 1, 'face_63_1771374828.png', NULL, NULL),
+(64, 'NADZWA B. INSANI', 'SOUTHERN CITY COLLEGES', '2003-11-22', 22, 'Female', 480, 1, 'face_64_1771387856.png', NULL, NULL),
+(65, 'Tantuan Shyra Mae P.', 'SOUTHERN CITY COLLEGES', '2004-01-20', 22, 'Female', 486, 1, 'face_65_1771387976.png', NULL, NULL),
+(66, 'Lenaria Joyce Ann H.', 'SOUTHERN CITY COLLEGES', '2003-08-15', 22, 'Female', 486, 1, 'face_66_1771388054.png', NULL, NULL),
+(67, 'MAHALAIL, ARJIMAR K.', 'SOUTHERN CITY COLLEGES', '2002-03-25', 23, 'Male', 486, 1, 'face_67_1771388160.png', NULL, NULL),
+(68, 'Abdulla, Iris Juhra B. ', 'Western Mindanao State University', '2004-06-16', 21, 'Female', 252, 1, 'face_68_1771460591.png', NULL, NULL),
+(69, 'Sedigo, Micah G.', 'Western Mindanao State University', '2006-01-17', 20, 'Female', 252, 1, 'face_69_1771460659.png', NULL, NULL),
+(70, 'Sy, Kitt Harley B.', 'Western Mindanao State University', '2006-08-27', 19, 'Male', 252, 1, 'face_70_1771460736.png', NULL, NULL),
+(71, 'Morales, Elizabeth Arbie D.', 'Western Mindanao State University', '2004-04-01', 21, 'Female', 252, 1, 'face_71_1771460807.png', NULL, NULL),
+(72, 'saipol A. jameri', 'Winzelle International College', '2003-06-04', 22, 'Male', 600, 1, 'face_72_1772585021.png', NULL, NULL),
+(73, 'BINLADEN A JAILANI', 'Winzelle International College', '1999-01-15', 27, 'Male', 600, 1, 'face_73_1772585179.png', NULL, NULL),
+(74, 'SAKUR SALMAN', 'WINZELLE INTERNATIONAL COLLEGE', '2000-03-16', 25, 'Male', 600, 1, 'face_74_1772585373.png', NULL, NULL),
+(75, 'LAKIBUL ADZNIR A,', 'Winzelle International College', '2000-06-05', 25, 'Male', 600, 1, 'face_75_1772585866.png', NULL, NULL),
+(78, 'Morales, Elizabeth Delos Reyes', 'WMSU', '2004-04-01', 22, 'Female', 252, 1, 'face_78_1776125644.png', 'ICT Literacy and Competency Development Bureau', 'Uris A. Fonollera');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `intern_custom_limits`
+--
+
+CREATE TABLE `intern_custom_limits` (
+  `id` int(11) NOT NULL,
+  `intern_id` int(11) NOT NULL,
+  `custom_pm_out` time NOT NULL,
+  `effective_date` date NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `intern_custom_limits`
+--
+
+INSERT INTO `intern_custom_limits` (`id`, `intern_id`, `custom_pm_out`, `effective_date`, `is_active`) VALUES
+(13, 71, '19:00:00', '2026-04-22', 0),
+(22, 71, '19:00:00', '2026-03-17', 0),
+(23, 71, '19:00:00', '2026-04-14', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `intern_notes`
+--
+
+CREATE TABLE `intern_notes` (
+  `id` int(11) NOT NULL,
+  `intern_id` varchar(50) NOT NULL,
+  `note_date` date NOT NULL,
+  `note_content` text NOT NULL,
+  `noted` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `intern_notes`
+--
+
+INSERT INTO `intern_notes` (`id`, `intern_id`, `note_date`, `note_content`, `noted`, `created_at`, `updated_at`) VALUES
+(2, '59', '2026-03-06', '08:20:00 AM', 0, '2026-03-06 01:38:19', '2026-03-06 05:04:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `intern_photos`
+--
+
+CREATE TABLE `intern_photos` (
+  `id` int(11) NOT NULL,
+  `intern_id` int(11) NOT NULL,
+  `photo_data` longtext NOT NULL,
+  `photo_type` enum('timein','timeout') NOT NULL,
+  `photo_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `photo_date` date NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pause_history`
+--
+
+CREATE TABLE `pause_history` (
+  `id` int(11) NOT NULL,
+  `timesheet_id` int(11) DEFAULT NULL,
+  `intern_id` int(11) DEFAULT NULL,
+  `pause_start` time DEFAULT NULL,
+  `pause_end` time DEFAULT NULL,
+  `pause_duration` time DEFAULT NULL,
+  `pause_reason` text DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings_history`
+--
+
+CREATE TABLE `settings_history` (
+  `id` int(11) NOT NULL,
+  `setting_key` varchar(50) NOT NULL DEFAULT 'max_daily_hours',
+  `setting_value` float NOT NULL,
+  `effective_date` date NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `settings_history`
+--
+
+INSERT INTO `settings_history` (`id`, `setting_key`, `setting_value`, `effective_date`, `created_at`) VALUES
+(6, 'max_daily_hours', 8, '2025-02-01', '2026-01-31 16:07:11'),
+(7, 'max_daily_hours', 10, '2026-03-16', '2026-03-17 06:52:45'),
+(9, 'max_daily_hours', 8, '2026-03-06', '2026-03-17 06:56:17'),
+(10, 'max_daily_hours', 8, '2026-03-18', '2026-03-18 08:33:41'),
+(11, 'max_daily_hours', 8, '2026-03-24', '2026-03-24 10:38:44'),
+(12, 'max_daily_hours', 10, '2026-04-07', '2026-04-06 16:07:11'),
+(13, 'max_daily_hours', 8, '2026-04-16', '2026-04-16 03:22:16'),
+(14, 'max_daily_hours', 8, '2026-04-21', '2026-04-21 14:45:50'),
+(15, 'max_daily_hours', 10, '2026-04-23', '2026-04-23 02:37:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `system_settings`
+--
+
+CREATE TABLE `system_settings` (
+  `id` int(11) NOT NULL,
+  `setting_key` varchar(50) NOT NULL,
+  `setting_value` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `system_settings`
+--
+
+INSERT INTO `system_settings` (`id`, `setting_key`, `setting_value`, `created_at`, `updated_at`) VALUES
+(1, 'admin_pin_hash', '$2y$10$.4Et9iTTl7oMZwz1MjHvw.Cd25fmgMXca5n3sXPqJCYR0eJwVw.Bi', '2026-03-16 03:05:47', '2026-04-06 16:06:30'),
+(2, 'max_daily_hours', '10', '2026-03-16 03:05:48', '2026-04-23 02:37:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `timesheet`
+--
+
+CREATE TABLE `timesheet` (
+  `record_id` int(11) NOT NULL,
+  `intern_id` int(255) NOT NULL,
+  `intern_name` varchar(255) NOT NULL,
+  `am_timein` time(6) NOT NULL,
+  `am_timein_display` time DEFAULT NULL,
+  `am_timeOut` time(6) NOT NULL,
+  `pm_timein` time(6) NOT NULL,
+  `pm_timeout` time(6) NOT NULL,
+  `am_hours_worked` time(6) NOT NULL,
+  `pm_hours_worked` time(6) NOT NULL,
+  `required_hours_rendered` int(255) NOT NULL,
+  `day_total_hours` time(6) NOT NULL,
+  `total_hours_rendered` time(6) NOT NULL,
+  `created_at` varchar(255) NOT NULL,
+  `confirm_overtime` int(11) NOT NULL,
+  `overtime_start` time(6) NOT NULL,
+  `overtime_hours` time(6) NOT NULL,
+  `overtime_end` time(6) NOT NULL,
+  `overtime_manual` tinyint(1) DEFAULT 0,
+  `pause_start` time DEFAULT '00:00:00',
+  `pause_end` time DEFAULT '00:00:00',
+  `pause_duration` time DEFAULT '00:00:00',
+  `pause_reason` text DEFAULT NULL,
+  `notes` text DEFAULT NULL,
+  `photo_data` longtext DEFAULT NULL,
+  `photo_timestamp` timestamp NULL DEFAULT NULL,
+  `photo_type` varchar(20) DEFAULT 'timein',
+  `am_timein_photo` varchar(255) DEFAULT NULL,
+  `am_timeout_photo` varchar(255) DEFAULT NULL,
+  `pm_timein_photo` varchar(255) DEFAULT NULL,
+  `pm_timeout_photo` varchar(255) DEFAULT NULL,
+  `am_timein_image` varchar(255) DEFAULT NULL,
+  `am_timeout_image` varchar(255) DEFAULT NULL,
+  `pm_timein_image` varchar(255) DEFAULT NULL,
+  `pm_timeout_image` varchar(255) DEFAULT NULL,
+  `am_standard_end` time DEFAULT NULL,
+  `pm_standard_end` time DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `timesheet`
+--
+
+INSERT INTO `timesheet` (`record_id`, `intern_id`, `intern_name`, `am_timein`, `am_timein_display`, `am_timeOut`, `pm_timein`, `pm_timeout`, `am_hours_worked`, `pm_hours_worked`, `required_hours_rendered`, `day_total_hours`, `total_hours_rendered`, `created_at`, `confirm_overtime`, `overtime_start`, `overtime_hours`, `overtime_end`, `overtime_manual`, `pause_start`, `pause_end`, `pause_duration`, `pause_reason`, `notes`, `photo_data`, `photo_timestamp`, `photo_type`, `am_timein_photo`, `am_timeout_photo`, `pm_timein_photo`, `pm_timeout_photo`, `am_timein_image`, `am_timeout_image`, `pm_timein_image`, `pm_timeout_image`, `am_standard_end`, `pm_standard_end`) VALUES
+(96, 11, 'Mohammad Rasheed Heding', '00:00:00.000000', '00:00:00', '00:00:00.000000', '18:10:02.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 486, '00:00:00.000000', '00:00:00.000000', '2025-05-29', 0, '17:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(99, 14, 'Salwa A. Maulod', '00:00:00.000000', '00:00:00', '00:00:00.000000', '17:07:48.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 486, '00:00:00.000000', '00:00:00.000000', '2025-05-29', 0, '17:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(100, 15, 'SALI RHAZDI BARA', '00:00:00.000000', '00:00:00', '00:00:00.000000', '17:12:46.000000', '17:13:02.000000', '00:00:00.000000', '00:00:16.000000', 720, '00:00:16.000000', '00:00:00.000000', '2025-05-29', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(101, 16, 'PALTINGCA,JOSHUA CIHM U.', '00:00:00.000000', '00:00:00', '00:00:00.000000', '17:38:34.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 540, '00:00:00.000000', '00:00:00.000000', '2025-05-29', 0, '17:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(102, 16, 'PALTINGCA,JOSHUA CIHM U.', '08:25:45.000000', '08:25:45', '17:49:30.000000', '00:00:00.000000', '00:00:00.000000', '09:23:45.000000', '00:00:00.000000', 540, '09:23:45.000000', '00:00:00.000000', '2025-05-30', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, 'OT TODAT TILL 8PM', NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(103, 14, 'Salwa A. Maulod', '08:36:41.000000', '08:36:41', '12:05:09.000000', '00:00:00.000000', '00:00:00.000000', '03:28:28.000000', '00:00:00.000000', 486, '03:28:28.000000', '00:00:00.000000', '2025-05-30', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(104, 12, 'yURR', '08:44:14.000000', '08:44:14', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 240, '00:00:00.000000', '00:00:00.000000', '2025-05-30', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(107, 11, 'Mohammad Rasheed Heding', '10:09:18.000000', '10:09:18', '11:23:53.000000', '00:00:00.000000', '00:00:00.000000', '01:14:35.000000', '00:00:00.000000', 486, '01:14:35.000000', '00:00:00.000000', '2025-05-30', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(108, 16, 'PALTINGCA,JOSHUA CIHM U.', '09:44:24.000000', '09:44:24', '12:34:10.000000', '13:00:00.000000', '00:00:00.000000', '02:49:46.000000', '00:00:00.000000', 540, '02:49:46.000000', '00:00:00.000000', '2025-06-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(109, 11, 'Mohammad Rasheed Heding', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:00:00.000000', '12:33:45.000000', '00:00:00.000000', '00:26:15.000000', 486, '00:26:15.000000', '00:00:00.000000', '2025-06-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(650, 52, 'MARBAN, JOPHEL V.', '08:00:00.000000', '07:43:57', '12:08:07.000000', '13:00:00.000000', '17:16:43.000000', '04:08:07.000000', '04:16:43.000000', 486, '08:24:50.000000', '00:00:00.000000', '2026-02-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(651, 53, 'IDJAD, NURJAN N.', '08:00:00.000000', '07:47:20', '12:08:45.000000', '13:00:00.000000', '17:18:32.000000', '04:08:45.000000', '04:18:32.000000', 486, '08:27:17.000000', '00:00:00.000000', '2026-02-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(654, 56, 'TALAB, PRINCESS WENDY T.', '08:06:30.000000', '08:06:30', '12:06:59.000000', '13:00:00.000000', '17:17:07.000000', '04:00:29.000000', '04:17:07.000000', 486, '08:17:36.000000', '00:00:00.000000', '2026-02-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(655, 57, 'FLORES, DESSA M. ', '08:07:44.000000', '08:07:44', '12:05:54.000000', '13:00:00.000000', '17:17:34.000000', '03:58:10.000000', '04:17:34.000000', 486, '08:15:44.000000', '00:00:00.000000', '2026-02-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(656, 58, 'MANLIN, KAYCEE N', '08:09:24.000000', '08:09:24', '12:07:35.000000', '13:00:00.000000', '17:18:03.000000', '03:58:11.000000', '04:18:03.000000', 486, '08:16:14.000000', '00:00:00.000000', '2026-02-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(657, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:11:01.000000', '08:11:01', '12:08:30.000000', '13:00:00.000000', '17:16:22.000000', '03:57:29.000000', '04:16:22.000000', 486, '08:13:51.000000', '00:00:00.000000', '2026-02-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(658, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:55:18', '12:00:00.000000', '13:00:00.000000', '17:11:30.000000', '04:00:00.000000', '04:11:30.000000', 486, '08:11:30.000000', '00:00:00.000000', '2026-02-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(659, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:00:00.000000', '07:56:27', '12:04:21.000000', '13:00:00.000000', '17:10:15.000000', '04:04:21.000000', '04:10:15.000000', 486, '08:14:36.000000', '00:00:00.000000', '2026-02-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(660, 56, 'TALAB, PRINCESS WENDY T.', '08:16:37.000000', '08:16:37', '12:11:46.000000', '13:00:00.000000', '17:16:01.000000', '03:55:09.000000', '04:16:01.000000', 486, '08:11:10.000000', '00:00:00.000000', '2026-02-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(661, 58, 'MANLIN, KAYCEE N', '08:21:11.000000', '08:21:11', '12:12:20.000000', '13:00:00.000000', '17:14:04.000000', '03:51:09.000000', '04:14:04.000000', 486, '08:05:13.000000', '00:00:00.000000', '2026-02-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(662, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:46:40', '12:04:33.000000', '13:00:00.000000', '17:20:03.000000', '04:04:33.000000', '04:20:03.000000', 486, '08:24:36.000000', '00:00:00.000000', '2026-02-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(663, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:00:00.000000', '07:56:10', '12:01:17.000000', '13:00:00.000000', '17:06:39.000000', '04:01:17.000000', '04:06:39.000000', 486, '08:07:56.000000', '00:00:00.000000', '2026-02-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(664, 56, 'TALAB, PRINCESS WENDY T.', '08:07:25.000000', '08:07:25', '12:05:02.000000', '00:00:00.000000', '00:00:00.000000', '03:57:37.000000', '00:00:00.000000', 486, '03:57:37.000000', '00:00:00.000000', '2026-02-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(665, 58, 'MANLIN, KAYCEE N', '08:31:10.000000', '08:31:10', '12:05:37.000000', '13:00:00.000000', '17:20:42.000000', '03:34:27.000000', '04:20:42.000000', 486, '07:55:09.000000', '00:00:00.000000', '2026-02-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(666, 56, 'TALAB, PRINCESS WENDY T.', '08:00:00.000000', '07:25:13', '12:01:47.000000', '13:00:00.000000', '17:12:34.000000', '04:01:47.000000', '04:12:34.000000', 486, '08:14:21.000000', '00:00:00.000000', '2026-02-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(667, 58, 'MANLIN, KAYCEE N', '08:00:00.000000', '07:26:03', '12:01:26.000000', '13:00:00.000000', '17:16:10.000000', '04:01:26.000000', '04:16:10.000000', 486, '08:17:36.000000', '00:00:00.000000', '2026-02-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(668, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:38:20', '12:01:07.000000', '13:00:00.000000', '17:13:12.000000', '04:01:07.000000', '04:13:12.000000', 486, '08:14:19.000000', '00:00:00.000000', '2026-02-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(669, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:00:00.000000', '07:55:11', '12:02:14.000000', '13:00:00.000000', '16:04:39.000000', '04:02:14.000000', '03:04:39.000000', 486, '07:06:53.000000', '00:00:00.000000', '2026-02-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(670, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:45:23', '12:06:08.000000', '13:00:00.000000', '17:10:09.000000', '04:06:08.000000', '04:10:09.000000', 486, '08:16:17.000000', '00:00:00.000000', '2026-02-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(671, 58, 'MANLIN, KAYCEE N', '08:00:00.000000', '07:53:56', '12:06:33.000000', '13:00:00.000000', '17:11:09.000000', '04:06:33.000000', '04:11:09.000000', 486, '08:17:42.000000', '00:00:00.000000', '2026-02-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(672, 56, 'TALAB, PRINCESS WENDY T.', '08:00:00.000000', '07:54:50', '12:06:56.000000', '13:00:00.000000', '17:11:30.000000', '04:06:56.000000', '04:11:30.000000', 486, '08:18:26.000000', '00:00:00.000000', '2026-02-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(673, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:00:00.000000', '07:59:41', '12:00:02.000000', '13:00:00.000000', '17:05:50.000000', '04:00:02.000000', '04:05:50.000000', 486, '08:05:52.000000', '00:00:00.000000', '2026-02-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(674, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:50:44', '12:06:22.000000', '13:00:00.000000', '17:13:46.000000', '04:06:22.000000', '04:13:46.000000', 486, '08:20:08.000000', '00:00:00.000000', '2026-02-11', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(675, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:00:00.000000', '07:59:01', '12:01:36.000000', '13:00:00.000000', '17:03:42.000000', '04:01:36.000000', '04:03:42.000000', 486, '08:05:18.000000', '00:00:00.000000', '2026-02-11', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(676, 58, 'MANLIN, KAYCEE N', '08:05:50.000000', '08:05:50', '12:06:02.000000', '13:00:00.000000', '17:15:04.000000', '04:00:12.000000', '04:15:04.000000', 486, '08:15:16.000000', '00:00:00.000000', '2026-02-11', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(677, 56, 'TALAB, PRINCESS WENDY T.', '08:26:53.000000', '08:26:53', '12:06:45.000000', '13:00:00.000000', '17:15:55.000000', '03:39:52.000000', '04:15:55.000000', 486, '07:55:47.000000', '00:00:00.000000', '2026-02-11', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(678, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:49:19', '12:03:06.000000', '13:00:00.000000', '17:07:45.000000', '04:03:06.000000', '04:07:45.000000', 486, '08:10:51.000000', '00:00:00.000000', '2026-02-12', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(679, 56, 'TALAB, PRINCESS WENDY T.', '08:00:00.000000', '07:58:22', '12:02:44.000000', '13:00:00.000000', '17:08:08.000000', '04:02:44.000000', '04:08:08.000000', 486, '08:10:52.000000', '00:00:00.000000', '2026-02-12', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(680, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:07:10.000000', '08:07:10', '12:01:33.000000', '13:00:00.000000', '17:04:45.000000', '03:54:23.000000', '04:04:45.000000', 486, '07:59:08.000000', '00:00:00.000000', '2026-02-12', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(681, 58, 'MANLIN, KAYCEE N', '08:18:37.000000', '08:18:37', '12:05:04.000000', '13:00:00.000000', '17:10:11.000000', '03:46:27.000000', '04:10:11.000000', 486, '07:56:38.000000', '00:00:00.000000', '2026-02-12', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(682, 56, 'TALAB, PRINCESS WENDY T.', '08:00:00.000000', '07:45:47', '12:06:58.000000', '13:00:00.000000', '17:17:51.000000', '04:06:58.000000', '04:17:51.000000', 486, '08:24:49.000000', '00:00:00.000000', '2026-02-13', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(683, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:48:56', '12:07:33.000000', '13:00:00.000000', '17:18:58.000000', '04:07:33.000000', '04:18:58.000000', 486, '08:26:31.000000', '00:00:00.000000', '2026-02-13', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(684, 58, 'MANLIN, KAYCEE N', '08:22:44.000000', '08:22:44', '12:08:12.000000', '13:00:00.000000', '17:20:13.000000', '03:45:28.000000', '04:20:13.000000', 486, '08:05:41.000000', '00:00:00.000000', '2026-02-13', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(685, 57, 'FLORES, DESSA M. ', '08:01:45.000000', '08:01:45', '12:05:04.000000', '13:00:00.000000', '18:18:17.000000', '04:03:19.000000', '05:18:17.000000', 486, '09:21:36.000000', '00:00:00.000000', '2026-02-16', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(686, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:01:59.000000', '08:01:59', '12:01:51.000000', '13:00:00.000000', '17:03:09.000000', '03:59:52.000000', '04:03:09.000000', 486, '08:03:01.000000', '00:00:00.000000', '2026-02-16', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(687, 56, 'TALAB, PRINCESS WENDY T.', '08:23:08.000000', '08:23:08', '12:05:41.000000', '13:00:00.000000', '18:18:01.000000', '03:42:33.000000', '05:18:01.000000', 486, '09:00:34.000000', '00:00:00.000000', '2026-02-16', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(688, 58, 'MANLIN, KAYCEE N', '08:23:34.000000', '08:23:34', '12:05:21.000000', '13:00:00.000000', '18:18:29.000000', '03:41:47.000000', '05:18:29.000000', 486, '09:00:16.000000', '00:00:00.000000', '2026-02-16', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(689, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:52:20', '12:03:17.000000', '13:00:00.000000', '16:30:23.000000', '04:03:17.000000', '03:30:23.000000', 486, '07:33:40.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(690, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:21:25.000000', '08:21:25', '12:01:31.000000', '13:00:00.000000', '17:02:03.000000', '03:40:06.000000', '04:02:03.000000', 486, '07:42:09.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(691, 56, 'TALAB, PRINCESS WENDY T.', '08:22:08.000000', '08:22:08', '12:03:33.000000', '13:00:00.000000', '17:03:42.000000', '03:41:25.000000', '04:03:42.000000', 486, '07:45:07.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(692, 60, 'Paul Antony J. Mazo', '08:25:04.000000', '08:25:04', '12:03:49.000000', '13:00:00.000000', '17:28:29.000000', '03:38:45.000000', '04:28:29.000000', 540, '08:07:14.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(693, 61, 'JAY RYAN R. BARTULIN', '08:28:21.000000', '08:28:21', '12:04:11.000000', '13:00:00.000000', '17:29:14.000000', '03:35:50.000000', '04:29:14.000000', 54, '08:05:04.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(694, 62, 'KASAN, PRINCE NEIL L.', '08:32:23.000000', '08:32:23', '12:04:33.000000', '13:00:00.000000', '17:35:05.000000', '03:32:10.000000', '04:35:05.000000', 540, '08:07:15.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(695, 63, 'SAQUIN, NORMAN S.', '08:34:23.000000', '08:34:23', '12:04:54.000000', '13:00:00.000000', '17:35:25.000000', '03:30:31.000000', '04:35:25.000000', 540, '08:05:56.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(696, 65, 'Tantuan Shyra Mae P.', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:00:00.000000', '17:09:47.000000', '00:00:00.000000', '04:09:47.000000', 486, '04:09:47.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(697, 64, 'NADZWA B. INSANI', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:02:01.000000', '17:08:57.000000', '00:00:00.000000', '04:06:56.000000', 480, '04:06:56.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(698, 58, 'MANLIN, KAYCEE N', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:06:00.000000', '17:06:29.000000', '00:00:00.000000', '04:00:29.000000', 486, '04:00:29.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(699, 67, 'MAHALAIL, ARJIMAR K.', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:21:43.000000', '17:11:15.000000', '00:00:00.000000', '03:49:32.000000', 486, '03:49:32.000000', '00:00:00.000000', '2026-02-18', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(700, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:55:32', '12:08:31.000000', '13:00:00.000000', '17:06:36.000000', '04:08:31.000000', '04:06:36.000000', 486, '08:15:07.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(701, 67, 'MAHALAIL, ARJIMAR K.', '08:00:00.000000', '07:56:06', '12:01:21.000000', '13:00:00.000000', '17:01:51.000000', '04:01:21.000000', '04:01:51.000000', 486, '08:03:12.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(702, 64, 'NADZWA B. INSANI', '08:00:00.000000', '07:56:28', '12:04:04.000000', '13:00:00.000000', '17:04:08.000000', '04:04:04.000000', '04:04:08.000000', 480, '08:08:12.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(703, 65, 'Tantuan Shyra Mae P.', '08:00:00.000000', '07:56:44', '12:03:39.000000', '13:00:00.000000', '17:01:10.000000', '04:03:39.000000', '04:01:10.000000', 486, '08:04:49.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(704, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:57:02', '12:01:40.000000', '13:00:00.000000', '17:02:53.000000', '04:01:40.000000', '04:02:53.000000', 540, '08:04:33.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(705, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:57:20', '12:02:36.000000', '13:00:00.000000', '17:03:24.000000', '04:02:36.000000', '04:03:24.000000', 540, '08:06:00.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(706, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:00:00.000000', '07:57:32', '12:02:03.000000', '13:00:00.000000', '17:01:28.000000', '04:02:03.000000', '04:01:28.000000', 486, '08:03:31.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(707, 60, 'Paul Antony J. Mazo', '08:00:00.000000', '07:57:46', '12:02:52.000000', '13:00:00.000000', '17:04:59.000000', '04:02:52.000000', '04:04:59.000000', 540, '08:07:51.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(708, 61, 'JAY RYAN R. BARTULIN', '08:00:00.000000', '07:57:57', '12:03:23.000000', '13:00:00.000000', '17:04:36.000000', '04:03:23.000000', '04:04:36.000000', 54, '08:07:59.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(709, 66, 'Lenaria Joyce Ann H.', '08:03:31.000000', '08:03:31', '12:02:18.000000', '13:00:00.000000', '17:03:42.000000', '03:58:47.000000', '04:03:42.000000', 486, '08:02:29.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(710, 56, 'TALAB, PRINCESS WENDY T.', '08:18:02.000000', '08:18:02', '12:10:07.000000', '13:00:00.000000', '17:08:49.000000', '03:52:05.000000', '04:08:49.000000', 486, '08:00:54.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(711, 58, 'MANLIN, KAYCEE N', '08:28:50.000000', '08:28:50', '12:09:29.000000', '13:00:00.000000', '17:07:35.000000', '03:40:39.000000', '04:07:35.000000', 486, '07:48:14.000000', '00:00:00.000000', '2026-02-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(712, 52, 'MARBAN, JOPHEL V.', '08:00:00.000000', '07:35:41', '12:02:02.000000', '13:00:00.000000', '17:04:31.000000', '04:02:02.000000', '04:04:31.000000', 486, '08:06:33.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(713, 68, 'Abdulla, Iris Juhra B. ', '08:00:00.000000', '07:36:32', '12:05:23.000000', '13:00:00.000000', '17:02:37.000000', '04:05:23.000000', '04:02:37.000000', 252, '08:08:00.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(714, 65, 'Tantuan Shyra Mae P.', '08:00:00.000000', '07:37:30', '12:03:20.000000', '00:00:00.000000', '00:00:00.000000', '04:03:20.000000', '00:00:00.000000', 486, '04:03:20.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(715, 53, 'IDJAD, NURJAN N.', '08:00:00.000000', '07:37:59', '12:02:39.000000', '13:00:00.000000', '17:04:50.000000', '04:02:39.000000', '04:04:50.000000', 486, '08:07:29.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(716, 69, 'Sedigo, Micah G.', '08:00:00.000000', '07:38:46', '12:05:39.000000', '13:00:00.000000', '17:03:23.000000', '04:05:39.000000', '04:03:23.000000', 252, '08:09:02.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(717, 60, 'Paul Antony J. Mazo', '08:00:00.000000', '07:40:04', '17:00:36.000000', '00:00:00.000000', '00:00:00.000000', '09:00:36.000000', '00:00:00.000000', 540, '09:00:36.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(718, 70, 'Sy, Kitt Harley B.', '08:00:00.000000', '07:41:29', '12:18:06.000000', '13:00:00.000000', '17:04:00.000000', '04:18:06.000000', '04:04:00.000000', 252, '08:22:06.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(719, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:48:09', '12:06:51.000000', '13:00:00.000000', '17:09:56.000000', '04:06:51.000000', '04:09:56.000000', 486, '08:16:47.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(720, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:48:38', '12:06:17.000000', '13:00:00.000000', '17:00:57.000000', '04:06:17.000000', '04:00:57.000000', 540, '08:07:14.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(721, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:48:59', '17:01:33.000000', '00:00:00.000000', '00:00:00.000000', '09:01:33.000000', '00:00:00.000000', 540, '09:01:33.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(722, 64, 'NADZWA B. INSANI', '08:00:00.000000', '07:49:20', '12:05:02.000000', '00:00:00.000000', '00:00:00.000000', '04:05:02.000000', '00:00:00.000000', 480, '04:05:02.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(723, 71, 'Morales, Elizabeth Arbie D.', '08:00:00.000000', '07:52:25', '12:18:31.000000', '13:00:00.000000', '17:02:58.000000', '04:18:31.000000', '04:02:58.000000', 252, '08:21:29.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(724, 67, 'MAHALAIL, ARJIMAR K.', '08:00:00.000000', '07:54:17', '12:03:04.000000', '00:00:00.000000', '00:00:00.000000', '04:03:04.000000', '00:00:00.000000', 486, '04:03:04.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(725, 61, 'JAY RYAN R. BARTULIN', '08:00:00.000000', '07:59:20', '12:06:34.000000', '13:00:00.000000', '17:05:11.000000', '04:06:34.000000', '04:05:11.000000', 54, '08:11:45.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(726, 66, 'Lenaria Joyce Ann H.', '08:00:00.000000', '08:00:13', '12:03:57.000000', '00:00:00.000000', '00:00:00.000000', '04:03:57.000000', '00:00:00.000000', 486, '04:03:57.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(727, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:07:43.000000', '08:07:43', '12:01:05.000000', '13:00:00.000000', '17:04:11.000000', '03:53:22.000000', '04:04:11.000000', 486, '07:57:33.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(728, 56, 'TALAB, PRINCESS WENDY T.', '08:14:59.000000', '08:14:59', '12:07:31.000000', '13:00:00.000000', '17:10:30.000000', '03:52:32.000000', '04:10:30.000000', 486, '08:03:02.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(729, 58, 'MANLIN, KAYCEE N', '08:25:15.000000', '08:25:15', '12:07:13.000000', '13:00:00.000000', '17:11:11.000000', '03:41:58.000000', '04:11:11.000000', 486, '07:53:09.000000', '00:00:00.000000', '2026-02-20', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(730, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:51:15', '12:01:24.000000', '13:00:00.000000', '17:00:29.000000', '04:01:24.000000', '04:00:29.000000', 540, '08:01:53.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(731, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:51:40', '12:01:40.000000', '13:00:00.000000', '17:01:26.000000', '04:01:40.000000', '04:01:26.000000', 540, '08:03:06.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(732, 61, 'JAY RYAN R. BARTULIN', '08:00:00.000000', '07:52:11', '12:01:09.000000', '13:00:00.000000', '17:01:07.000000', '04:01:09.000000', '04:01:07.000000', 54, '08:02:16.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(733, 65, 'Tantuan Shyra Mae P.', '08:00:00.000000', '07:52:28', '12:01:55.000000', '13:00:00.000000', '17:03:41.000000', '04:01:55.000000', '04:03:41.000000', 486, '08:05:36.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(734, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:52:44', '12:05:48.000000', '13:00:00.000000', '17:07:16.000000', '04:05:48.000000', '04:07:16.000000', 486, '08:13:04.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(735, 60, 'Paul Antony J. Mazo', '08:00:00.000000', '07:53:32', '12:00:52.000000', '13:00:00.000000', '17:00:48.000000', '04:00:52.000000', '04:00:48.000000', 540, '08:01:40.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(736, 67, 'MAHALAIL, ARJIMAR K.', '08:23:20.000000', '08:23:20', '12:04:39.000000', '13:00:00.000000', '00:00:00.000000', '03:41:19.000000', '00:00:00.000000', 486, '03:41:19.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(737, 64, 'NADZWA B. INSANI', '08:23:34.000000', '08:23:34', '12:05:01.000000', '13:00:00.000000', '17:23:28.000000', '03:41:27.000000', '04:23:28.000000', 480, '08:04:55.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(738, 56, 'TALAB, PRINCESS WENDY T.', '08:49:03.000000', '08:49:03', '12:06:53.000000', '13:00:00.000000', '17:08:14.000000', '03:17:50.000000', '04:08:14.000000', 486, '07:26:04.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(739, 58, 'MANLIN, KAYCEE N', '08:49:21.000000', '08:49:21', '12:06:07.000000', '13:00:00.000000', '17:07:51.000000', '03:16:46.000000', '04:07:51.000000', 486, '07:24:37.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(740, 59, 'MACAPAGAL MICKAEL ANTHONY A', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:00:00.000000', '17:02:10.000000', '00:00:00.000000', '04:02:10.000000', 486, '04:02:10.000000', '00:00:00.000000', '2026-02-23', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(741, 70, 'Sy, Kitt Harley B.', '08:00:00.000000', '07:25:31', '12:04:02.000000', '13:03:05.000000', '17:19:21.000000', '04:04:02.000000', '04:16:16.000000', 252, '08:20:18.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(742, 71, 'Morales, Elizabeth Arbie D.', '08:00:00.000000', '07:42:12', '12:57:28.000000', '13:00:00.000000', '17:13:23.000000', '04:57:28.000000', '04:13:23.000000', 252, '09:10:51.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(743, 65, 'Tantuan Shyra Mae P.', '08:00:00.000000', '07:48:24', '12:03:32.000000', '13:00:00.000000', '17:03:51.000000', '04:03:32.000000', '04:03:51.000000', 486, '08:07:23.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(744, 69, 'Sedigo, Micah G.', '08:00:00.000000', '07:53:24', '17:16:40.000000', '00:00:00.000000', '00:00:00.000000', '09:16:40.000000', '00:00:00.000000', 252, '09:16:40.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(745, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:54:22', '17:00:44.000000', '00:00:00.000000', '00:00:00.000000', '09:00:44.000000', '00:00:00.000000', 540, '09:00:44.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(746, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:54:49', '17:01:09.000000', '00:00:00.000000', '00:00:00.000000', '09:01:09.000000', '00:00:00.000000', 540, '09:01:09.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(747, 64, 'NADZWA B. INSANI', '08:00:00.000000', '07:55:50', '12:02:12.000000', '13:00:00.000000', '17:11:51.000000', '04:02:12.000000', '04:11:51.000000', 480, '08:14:03.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(748, 67, 'MAHALAIL, ARJIMAR K.', '08:00:00.000000', '07:59:38', '12:03:07.000000', '13:00:00.000000', '17:01:50.000000', '04:03:07.000000', '04:01:50.000000', 486, '08:04:57.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(749, 68, 'Abdulla, Iris Juhra B. ', '08:00:00.000000', '07:59:51', '12:56:29.000000', '13:00:00.000000', '17:18:34.000000', '04:56:29.000000', '04:18:34.000000', 252, '09:15:03.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(750, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '08:00:10', '12:05:37.000000', '13:00:00.000000', '17:06:19.000000', '04:05:37.000000', '04:06:19.000000', 486, '08:11:56.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(751, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:01:42.000000', '08:01:42', '17:01:23.000000', '00:00:00.000000', '00:00:00.000000', '08:59:41.000000', '00:00:00.000000', 486, '08:59:41.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(752, 66, 'Lenaria Joyce Ann H.', '08:10:09.000000', '08:10:09', '12:02:45.000000', '13:00:00.000000', '17:12:16.000000', '03:52:36.000000', '04:12:16.000000', 486, '08:04:52.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(753, 58, 'MANLIN, KAYCEE N', '08:13:12.000000', '08:13:12', '12:05:22.000000', '13:00:00.000000', '17:06:48.000000', '03:52:10.000000', '04:06:48.000000', 486, '07:58:58.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(754, 61, 'JAY RYAN R. BARTULIN', '08:15:36.000000', '08:15:36', '12:01:24.000000', '17:17:50.000000', '00:00:00.000000', '03:45:48.000000', '00:00:00.000000', 54, '03:45:48.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(755, 60, 'Paul Antony J. Mazo', '08:15:59.000000', '08:15:59', '17:17:05.000000', '00:00:00.000000', '00:00:00.000000', '09:01:06.000000', '00:00:00.000000', 540, '09:01:06.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(756, 56, 'TALAB, PRINCESS WENDY T.', '08:21:05.000000', '08:21:05', '12:06:01.000000', '13:00:00.000000', '17:07:16.000000', '03:44:56.000000', '04:07:16.000000', 486, '07:52:12.000000', '00:00:00.000000', '2026-02-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(757, 66, 'Lenaria Joyce Ann H.', '08:00:00.000000', '07:44:17', '12:07:28.000000', '13:00:00.000000', '17:06:17.000000', '04:07:28.000000', '04:06:17.000000', 486, '08:13:45.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(758, 65, 'Tantuan Shyra Mae P.', '08:00:00.000000', '07:45:24', '12:02:43.000000', '13:00:00.000000', '17:09:52.000000', '04:02:43.000000', '04:09:52.000000', 486, '08:12:35.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(759, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:46:11', '12:04:26.000000', '13:00:00.000000', '17:04:04.000000', '04:04:26.000000', '04:04:04.000000', 486, '08:08:30.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(760, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:47:42', '12:01:38.000000', '13:00:00.000000', '17:00:40.000000', '04:01:38.000000', '04:00:40.000000', 540, '08:02:18.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(761, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:48:16', '12:00:55.000000', '13:00:00.000000', '17:00:14.000000', '04:00:55.000000', '04:00:14.000000', 540, '08:01:09.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `timesheet` (`record_id`, `intern_id`, `intern_name`, `am_timein`, `am_timein_display`, `am_timeOut`, `pm_timein`, `pm_timeout`, `am_hours_worked`, `pm_hours_worked`, `required_hours_rendered`, `day_total_hours`, `total_hours_rendered`, `created_at`, `confirm_overtime`, `overtime_start`, `overtime_hours`, `overtime_end`, `overtime_manual`, `pause_start`, `pause_end`, `pause_duration`, `pause_reason`, `notes`, `photo_data`, `photo_timestamp`, `photo_type`, `am_timein_photo`, `am_timeout_photo`, `pm_timein_photo`, `pm_timeout_photo`, `am_timein_image`, `am_timeout_image`, `pm_timein_image`, `pm_timeout_image`, `am_standard_end`, `pm_standard_end`) VALUES
+(762, 64, 'NADZWA B. INSANI', '08:00:00.000000', '07:52:50', '17:05:45.000000', '00:00:00.000000', '00:00:00.000000', '09:05:45.000000', '00:00:00.000000', 480, '09:05:45.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(763, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:07:55.000000', '08:07:55', '12:02:11.000000', '13:00:00.000000', '17:07:07.000000', '03:54:16.000000', '04:07:07.000000', 486, '08:01:23.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(764, 60, 'Paul Antony J. Mazo', '08:09:04.000000', '08:09:04', '12:01:52.000000', '13:00:00.000000', '17:23:10.000000', '03:52:48.000000', '04:23:10.000000', 540, '08:15:58.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(765, 58, 'MANLIN, KAYCEE N', '08:16:15.000000', '08:16:15', '12:04:53.000000', '13:00:00.000000', '17:45:12.000000', '03:48:38.000000', '04:45:12.000000', 486, '08:33:50.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(766, 61, 'JAY RYAN R. BARTULIN', '08:20:08.000000', '08:20:08', '12:01:16.000000', '13:00:00.000000', '17:22:38.000000', '03:41:08.000000', '04:22:38.000000', 54, '08:03:46.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(767, 56, 'TALAB, PRINCESS WENDY T.', '08:40:28.000000', '08:40:28', '12:08:18.000000', '13:00:00.000000', '17:45:57.000000', '03:27:50.000000', '04:45:57.000000', 486, '08:13:47.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(768, 67, 'MAHALAIL, ARJIMAR K.', '09:06:23.000000', '09:06:23', '17:07:22.000000', '00:00:00.000000', '00:00:00.000000', '08:00:59.000000', '00:00:00.000000', 486, '08:00:59.000000', '00:00:00.000000', '2026-02-25', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(769, 52, 'MARBAN, JOPHEL V.', '08:00:00.000000', '07:33:31', '12:03:14.000000', '13:00:00.000000', '17:12:07.000000', '04:03:14.000000', '04:12:07.000000', 486, '08:15:21.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(770, 53, 'IDJAD, NURJAN N.', '08:00:00.000000', '07:40:16', '12:03:30.000000', '13:00:00.000000', '17:11:36.000000', '04:03:30.000000', '04:11:36.000000', 486, '08:15:06.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(771, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:43:59', '12:01:07.000000', '13:00:00.000000', '17:00:14.000000', '04:01:07.000000', '04:00:14.000000', 540, '08:01:21.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(772, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:44:16', '12:01:23.000000', '13:00:00.000000', '17:00:29.000000', '04:01:23.000000', '04:00:29.000000', 540, '08:01:52.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(773, 64, 'NADZWA B. INSANI', '08:00:00.000000', '07:44:36', '17:01:48.000000', '00:00:00.000000', '00:00:00.000000', '09:01:48.000000', '00:00:00.000000', 480, '09:01:48.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(774, 67, 'MAHALAIL, ARJIMAR K.', '08:00:00.000000', '07:52:41', '12:02:23.000000', '13:00:00.000000', '17:01:09.000000', '04:02:23.000000', '04:01:09.000000', 486, '08:03:32.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(775, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:56:47', '12:03:45.000000', '13:00:00.000000', '17:22:37.000000', '04:03:45.000000', '04:22:37.000000', 486, '08:26:22.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(776, 66, 'Lenaria Joyce Ann H.', '08:00:00.000000', '07:57:22', '12:02:06.000000', '13:00:00.000000', '17:02:17.000000', '04:02:06.000000', '04:02:17.000000', 486, '08:04:23.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(777, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:00:00.000000', '07:57:47', '12:00:47.000000', '13:00:00.000000', '17:02:55.000000', '04:00:47.000000', '04:02:55.000000', 486, '08:03:42.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(778, 61, 'JAY RYAN R. BARTULIN', '08:02:46.000000', '08:02:46', '12:01:49.000000', '13:00:00.000000', '17:13:37.000000', '03:59:03.000000', '04:13:37.000000', 54, '08:12:40.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(779, 65, 'Tantuan Shyra Mae P.', '08:06:23.000000', '08:06:23', '12:03:58.000000', '13:00:00.000000', '17:12:33.000000', '03:57:35.000000', '04:12:33.000000', 486, '08:10:08.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(780, 60, 'Paul Antony J. Mazo', '08:13:31.000000', '08:13:31', '12:05:00.000000', '13:00:00.000000', '17:14:58.000000', '03:51:29.000000', '04:14:58.000000', 540, '08:06:27.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(781, 56, 'TALAB, PRINCESS WENDY T.', '08:13:49.000000', '08:13:49', '12:04:15.000000', '13:00:00.000000', '17:15:36.000000', '03:50:26.000000', '04:15:36.000000', 486, '08:06:02.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(782, 58, 'MANLIN, KAYCEE N', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:00:00.000000', '17:13:58.000000', '00:00:00.000000', '04:13:58.000000', 486, '04:13:58.000000', '00:00:00.000000', '2026-02-27', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(783, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:37:52', '12:01:27.000000', '13:00:00.000000', '17:01:14.000000', '04:01:27.000000', '04:01:14.000000', 540, '08:02:41.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(784, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:38:09', '12:01:49.000000', '13:00:00.000000', '17:01:35.000000', '04:01:49.000000', '04:01:35.000000', 540, '08:03:24.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(785, 65, 'Tantuan Shyra Mae P.', '08:00:00.000000', '07:41:29', '12:02:12.000000', '13:00:00.000000', '17:04:41.000000', '04:02:12.000000', '04:04:41.000000', 486, '08:06:53.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(786, 64, 'NADZWA B. INSANI', '08:00:00.000000', '07:44:53', '17:02:43.000000', '00:00:00.000000', '00:00:00.000000', '09:02:43.000000', '00:00:00.000000', 480, '09:02:43.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(787, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:49:40', '12:05:55.000000', '13:00:00.000000', '17:21:14.000000', '04:05:55.000000', '04:21:14.000000', 486, '08:27:09.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(788, 61, 'JAY RYAN R. BARTULIN', '08:00:00.000000', '07:56:10', '12:02:47.000000', '13:00:00.000000', '17:10:52.000000', '04:02:47.000000', '04:10:52.000000', 54, '08:13:39.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(789, 66, 'Lenaria Joyce Ann H.', '08:00:00.000000', '08:00:28', '12:02:29.000000', '13:00:00.000000', '17:02:12.000000', '04:02:29.000000', '04:02:12.000000', 486, '08:04:41.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(790, 67, 'MAHALAIL, ARJIMAR K.', '08:21:13.000000', '08:21:13', '12:03:07.000000', '13:00:00.000000', '17:05:22.000000', '03:41:54.000000', '04:05:22.000000', 486, '07:47:16.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(791, 60, 'Paul Antony J. Mazo', '08:26:05.000000', '08:26:05', '12:03:28.000000', '13:45:23.000000', '17:11:08.000000', '03:37:23.000000', '03:25:45.000000', 540, '07:03:08.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(792, 56, 'TALAB, PRINCESS WENDY T.', '08:57:09.000000', '08:57:09', '12:07:16.000000', '13:00:00.000000', '17:31:13.000000', '03:10:07.000000', '04:31:13.000000', 486, '07:41:20.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(793, 58, 'MANLIN, KAYCEE N', '08:57:23.000000', '08:57:23', '12:06:21.000000', '13:00:00.000000', '17:21:35.000000', '03:08:58.000000', '04:21:35.000000', 486, '07:30:33.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(794, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:58:58.000000', '08:58:58', '12:04:48.000000', '13:00:00.000000', '17:04:18.000000', '03:05:50.000000', '04:04:18.000000', 486, '07:10:08.000000', '00:00:00.000000', '2026-03-02', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(795, 60, 'Paul Antony J. Mazo', '08:00:00.000000', '07:35:37', '12:04:36.000000', '13:00:00.000000', '17:07:04.000000', '04:04:36.000000', '04:07:04.000000', 540, '08:11:40.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(796, 52, 'MARBAN, JOPHEL V.', '08:00:00.000000', '07:38:32', '12:03:18.000000', '13:00:00.000000', '17:02:27.000000', '04:03:18.000000', '04:02:27.000000', 486, '08:05:45.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(797, 70, 'Sy, Kitt Harley B.', '08:00:00.000000', '07:44:48', '13:00:58.000000', '13:01:09.000000', '17:00:28.000000', '05:00:58.000000', '03:59:19.000000', 252, '09:00:17.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(798, 69, 'Sedigo, Micah G.', '08:00:00.000000', '07:45:42', '12:02:19.000000', '13:00:00.000000', '17:01:30.000000', '04:02:19.000000', '04:01:30.000000', 252, '08:03:49.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(799, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:47:57', '12:04:21.000000', '13:00:00.000000', '17:03:57.000000', '04:04:21.000000', '04:03:57.000000', 486, '08:08:18.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(800, 67, 'MAHALAIL, ARJIMAR K.', '08:00:00.000000', '07:53:31', '12:03:02.000000', '13:00:00.000000', '17:02:57.000000', '04:03:02.000000', '04:02:57.000000', 486, '08:05:59.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(801, 65, 'Tantuan Shyra Mae P.', '08:00:00.000000', '07:57:12', '12:11:13.000000', '13:00:00.000000', '17:04:39.000000', '04:11:13.000000', '04:04:39.000000', 486, '08:15:52.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(802, 71, 'Morales, Elizabeth Arbie D.', '08:00:00.000000', '07:57:34', '12:02:05.000000', '13:00:00.000000', '17:00:49.000000', '04:02:05.000000', '04:00:49.000000', 252, '08:02:54.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(803, 53, 'IDJAD, NURJAN N.', '08:00:00.000000', '07:58:45', '12:03:53.000000', '13:00:00.000000', '17:01:09.000000', '04:03:53.000000', '04:01:09.000000', 486, '08:05:02.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(804, 62, 'KASAN, PRINCE NEIL L.', '08:04:16.000000', '08:04:16', '12:01:07.000000', '13:00:00.000000', '17:25:47.000000', '03:56:51.000000', '04:25:47.000000', 540, '08:22:38.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(805, 63, 'SAQUIN, NORMAN S.', '08:04:34.000000', '08:04:34', '12:01:25.000000', '13:00:00.000000', '17:26:05.000000', '03:56:51.000000', '04:26:05.000000', 540, '08:22:56.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(806, 61, 'JAY RYAN R. BARTULIN', '08:04:56.000000', '08:04:56', '12:04:50.000000', '13:00:00.000000', '17:06:30.000000', '03:59:54.000000', '04:06:30.000000', 54, '08:06:24.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(807, 58, 'MANLIN, KAYCEE N', '08:05:21.000000', '08:05:21', '12:03:39.000000', '13:00:00.000000', '17:05:35.000000', '03:58:18.000000', '04:05:35.000000', 486, '08:03:53.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(808, 56, 'TALAB, PRINCESS WENDY T.', '08:06:46.000000', '08:06:46', '12:04:12.000000', '13:00:00.000000', '16:38:16.000000', '03:57:26.000000', '03:38:16.000000', 486, '07:35:42.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(809, 66, 'Lenaria Joyce Ann H.', '08:12:33.000000', '08:12:33', '12:01:43.000000', '13:00:00.000000', '17:12:51.000000', '03:49:10.000000', '04:12:51.000000', 486, '08:02:01.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(810, 64, 'NADZWA B. INSANI', '08:12:49.000000', '08:12:49', '17:13:08.000000', '00:00:00.000000', '00:00:00.000000', '09:00:19.000000', '00:00:00.000000', 480, '09:00:19.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(811, 68, 'Abdulla, Iris Juhra B. ', '08:25:44.000000', '08:25:44', '12:02:41.000000', '16:59:53.000000', '17:25:19.000000', '03:36:57.000000', '00:25:26.000000', 252, '04:02:23.000000', '00:00:00.000000', '2026-03-03', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(812, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:49:06', '12:10:54.000000', '13:00:00.000000', '17:17:41.000000', '04:10:54.000000', '04:17:41.000000', 486, '08:28:35.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(813, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:53:17', '12:01:36.000000', '13:00:00.000000', '17:02:18.000000', '04:01:36.000000', '04:02:18.000000', 540, '08:03:54.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(814, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:53:36', '12:01:58.000000', '13:00:00.000000', '17:02:40.000000', '04:01:58.000000', '04:02:40.000000', 540, '08:04:38.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(815, 67, 'MAHALAIL, ARJIMAR K.', '08:00:00.000000', '07:56:31', '12:01:19.000000', '13:00:00.000000', '17:03:26.000000', '04:01:19.000000', '04:03:26.000000', 486, '08:04:45.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(816, 65, 'Tantuan Shyra Mae P.', '08:00:00.000000', '07:59:44', '12:01:01.000000', '13:00:00.000000', '17:02:57.000000', '04:01:01.000000', '04:02:57.000000', 486, '08:03:58.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(817, 64, 'NADZWA B. INSANI', '08:07:29.000000', '08:07:29', '17:09:57.000000', '00:00:00.000000', '00:00:00.000000', '09:02:28.000000', '00:00:00.000000', 480, '09:02:28.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(818, 66, 'Lenaria Joyce Ann H.', '08:07:46.000000', '08:07:46', '12:02:34.000000', '13:00:00.000000', '17:10:29.000000', '03:54:48.000000', '04:10:29.000000', 486, '08:05:17.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(819, 61, 'JAY RYAN R. BARTULIN', '08:09:23.000000', '08:09:23', '17:15:43.000000', '00:00:00.000000', '00:00:00.000000', '09:06:20.000000', '00:00:00.000000', 54, '09:06:20.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(820, 58, 'MANLIN, KAYCEE N', '08:13:03.000000', '08:13:03', '12:11:33.000000', '13:00:00.000000', '17:18:19.000000', '03:58:30.000000', '04:18:19.000000', 486, '08:16:49.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(821, 60, 'Paul Antony J. Mazo', '08:13:23.000000', '08:13:23', '17:15:02.000000', '00:00:00.000000', '00:00:00.000000', '09:01:39.000000', '00:00:00.000000', 540, '09:01:39.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(822, 75, 'LAKIBUL ADZNIR A,', '08:58:54.000000', '08:58:54', '12:06:15.000000', '13:00:00.000000', '17:32:59.000000', '03:07:21.000000', '04:32:59.000000', 600, '07:40:20.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(823, 73, 'BINLADEN A JAILANI', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:00:00.000000', '12:04:15.000000', '00:00:00.000000', '00:55:45.000000', 600, '00:55:45.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(824, 72, 'saipol A. jameri', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:00:00.000000', '17:31:48.000000', '00:00:00.000000', '04:31:48.000000', 600, '04:31:48.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(825, 74, 'SAKUR SALMAN', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:00:00.000000', '17:32:31.000000', '00:00:00.000000', '04:32:31.000000', 600, '04:32:31.000000', '00:00:00.000000', '2026-03-04', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(826, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:38:36', '12:05:18.000000', '17:02:25.000000', '17:03:47.000000', '04:05:18.000000', '00:01:22.000000', 540, '04:06:40.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(827, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:39:10', '12:05:02.000000', '17:05:04.000000', '17:05:30.000000', '04:05:02.000000', '00:00:26.000000', 540, '04:05:28.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(828, 69, 'Sedigo, Micah G.', '08:00:00.000000', '07:48:47', '12:03:18.000000', '13:00:00.000000', '15:49:35.000000', '04:03:18.000000', '02:49:35.000000', 252, '06:52:53.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(829, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:51:37', '12:00:28.000000', '13:00:00.000000', '17:11:42.000000', '04:00:28.000000', '04:11:42.000000', 486, '08:12:10.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(830, 64, 'NADZWA B. INSANI', '08:00:00.000000', '07:57:08', '12:13:26.000000', '13:00:00.000000', '17:16:00.000000', '04:13:26.000000', '04:16:00.000000', 480, '08:29:26.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(831, 58, 'MANLIN, KAYCEE N', '08:00:00.000000', '07:57:41', '12:02:30.000000', '13:00:00.000000', '17:24:58.000000', '04:02:30.000000', '04:24:58.000000', 486, '08:27:28.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(832, 70, 'Sy, Kitt Harley B.', '08:04:08.000000', '08:04:08', '17:06:40.000000', '00:00:00.000000', '00:00:00.000000', '09:02:32.000000', '00:00:00.000000', 252, '09:02:32.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(833, 71, 'Morales, Elizabeth Arbie D.', '08:04:42.000000', '08:04:42', '12:03:50.000000', '13:00:00.000000', '17:06:56.000000', '03:59:08.000000', '04:06:56.000000', 252, '08:06:04.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(834, 52, 'MARBAN, JOPHEL V.', '08:08:12.000000', '08:08:12', '12:00:43.000000', '13:00:00.000000', '17:10:32.000000', '03:52:31.000000', '04:10:32.000000', 486, '08:03:03.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(835, 68, 'Abdulla, Iris Juhra B. ', '08:12:57.000000', '08:12:57', '12:03:31.000000', '13:00:00.000000', '15:49:22.000000', '03:50:34.000000', '02:49:22.000000', 252, '06:39:56.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(836, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:13:16.000000', '08:13:16', '12:04:01.000000', '13:00:00.000000', '17:09:23.000000', '03:50:45.000000', '04:09:23.000000', 486, '08:00:08.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(837, 72, 'saipol A. jameri', '08:16:13.000000', '08:16:13', '12:04:28.000000', '13:00:00.000000', '17:29:14.000000', '03:48:15.000000', '04:29:14.000000', 600, '08:17:29.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(838, 66, 'Lenaria Joyce Ann H.', '08:16:27.000000', '08:16:27', '12:02:59.000000', '13:00:00.000000', '17:17:50.000000', '03:46:32.000000', '04:17:50.000000', 486, '08:04:22.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(839, 60, 'Paul Antony J. Mazo', '08:18:18.000000', '08:18:18', '12:02:02.000000', '13:00:00.000000', '17:27:00.000000', '03:43:44.000000', '04:27:00.000000', 540, '08:10:44.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(840, 75, 'LAKIBUL ADZNIR A,', '08:20:59.000000', '08:20:59', '12:07:31.000000', '13:00:00.000000', '17:29:54.000000', '03:46:32.000000', '04:29:54.000000', 600, '08:16:26.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(841, 53, 'IDJAD, NURJAN N.', '08:22:34.000000', '08:22:34', '12:02:46.000000', '13:00:00.000000', '17:09:11.000000', '03:40:12.000000', '04:09:11.000000', 486, '07:49:23.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(842, 65, 'Tantuan Shyra Mae P.', '08:22:44.000000', '08:22:44', '12:13:43.000000', '13:00:00.000000', '17:18:27.000000', '03:50:59.000000', '04:18:27.000000', 486, '08:09:26.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(843, 61, 'JAY RYAN R. BARTULIN', '08:24:32.000000', '08:24:32', '12:01:47.000000', '13:00:00.000000', '17:26:23.000000', '03:37:15.000000', '04:26:23.000000', 54, '08:03:38.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(844, 67, 'MAHALAIL, ARJIMAR K.', '08:36:12.000000', '08:36:12', '12:57:26.000000', '13:00:00.000000', '17:07:09.000000', '04:21:14.000000', '04:07:09.000000', 486, '08:28:23.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(845, 73, 'BINLADEN A JAILANI', '09:59:31.000000', '09:59:31', '12:06:50.000000', '13:00:00.000000', '17:31:54.000000', '02:07:19.000000', '04:31:54.000000', 600, '06:39:13.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(846, 74, 'SAKUR SALMAN', '00:00:00.000000', '00:00:00', '00:00:00.000000', '13:00:00.000000', '17:33:26.000000', '00:00:00.000000', '04:33:26.000000', 600, '04:33:26.000000', '00:00:00.000000', '2026-03-05', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(847, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:35:39', '12:02:19.000000', '13:00:00.000000', '17:13:24.000000', '04:02:19.000000', '04:13:24.000000', 540, '08:15:43.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(848, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:35:56', '12:01:59.000000', '13:00:00.000000', '17:13:45.000000', '04:01:59.000000', '04:13:45.000000', 540, '08:15:44.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(849, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:45:45', '12:06:19.000000', '13:00:00.000000', '17:05:59.000000', '04:06:19.000000', '04:05:59.000000', 486, '08:12:18.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(850, 52, 'MARBAN, JOPHEL V.', '08:00:00.000000', '07:50:27', '12:06:05.000000', '13:00:00.000000', '17:03:34.000000', '04:06:05.000000', '04:03:34.000000', 486, '08:09:39.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(851, 71, 'Morales, Elizabeth Arbie D.', '08:00:00.000000', '07:51:42', '12:01:33.000000', '13:00:00.000000', '17:04:51.000000', '04:01:33.000000', '04:04:51.000000', 252, '08:06:24.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(852, 70, 'Sy, Kitt Harley B.', '08:00:00.000000', '07:53:05', '08:56:01.000000', '13:00:00.000000', '17:04:32.000000', '00:56:01.000000', '04:04:32.000000', 252, '05:00:33.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(853, 66, 'Lenaria Joyce Ann H.', '08:00:00.000000', '07:54:58', '12:02:53.000000', '13:00:00.000000', '17:02:25.000000', '04:02:53.000000', '04:02:25.000000', 486, '08:05:18.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(854, 58, 'MANLIN, KAYCEE N', '08:00:00.000000', '08:00:40', '12:05:38.000000', '13:00:00.000000', '17:53:37.000000', '04:05:38.000000', '04:53:37.000000', 486, '08:59:15.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(855, 65, 'Tantuan Shyra Mae P.', '08:01:44.000000', '08:01:44', '12:04:03.000000', '13:00:00.000000', '17:02:39.000000', '04:02:19.000000', '04:02:39.000000', 486, '08:04:58.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(856, 53, 'IDJAD, NURJAN N.', '08:04:52.000000', '08:04:52', '12:05:12.000000', '13:00:00.000000', '17:05:38.000000', '04:00:20.000000', '04:05:38.000000', 486, '08:05:58.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(857, 64, 'NADZWA B. INSANI', '08:06:43.000000', '08:06:43', '17:05:20.000000', '00:00:00.000000', '00:00:00.000000', '08:58:37.000000', '00:00:00.000000', 480, '08:58:37.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(858, 60, 'Paul Antony J. Mazo', '08:12:15.000000', '08:12:15', '12:02:38.000000', '17:27:28.000000', '17:27:40.000000', '03:50:23.000000', '00:00:12.000000', 540, '03:50:35.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(859, 68, 'Abdulla, Iris Juhra B. ', '08:15:47.000000', '08:15:47', '12:07:21.000000', '13:00:00.000000', '17:04:07.000000', '03:51:34.000000', '04:04:07.000000', 252, '07:55:41.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(860, 67, 'MAHALAIL, ARJIMAR K.', '08:19:21.000000', '08:19:21', '12:03:33.000000', '13:00:00.000000', '17:03:11.000000', '03:44:12.000000', '04:03:11.000000', 486, '07:47:23.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(861, 61, 'JAY RYAN R. BARTULIN', '08:25:27.000000', '08:25:27', '12:03:13.000000', '13:00:00.000000', '17:28:04.000000', '03:37:46.000000', '04:28:04.000000', 54, '08:05:50.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(862, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:37:04.000000', '08:37:04', '12:04:59.000000', '13:00:00.000000', '17:03:51.000000', '03:27:55.000000', '04:03:51.000000', 486, '07:31:46.000000', '00:00:00.000000', '2026-03-06', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, '08:20:00 AM', NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(863, 58, 'MANLIN, KAYCEE N', '08:00:00.000000', '07:40:03', '12:32:57.000000', '13:00:00.000000', '17:29:35.000000', '04:32:57.000000', '04:29:35.000000', 486, '09:02:32.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(864, 61, 'JAY RYAN R. BARTULIN', '08:00:00.000000', '07:40:55', '12:01:21.000000', '13:00:00.000000', '17:01:16.000000', '04:01:21.000000', '04:01:16.000000', 54, '08:02:37.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(865, 65, 'Tantuan Shyra Mae P.', '08:00:00.000000', '07:42:34', '12:02:22.000000', '13:00:00.000000', '17:01:57.000000', '04:02:22.000000', '04:01:57.000000', 486, '08:04:19.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(866, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:46:27', '12:05:10.000000', '13:00:00.000000', '17:11:51.000000', '04:05:10.000000', '04:11:51.000000', 486, '08:17:01.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(867, 64, 'NADZWA B. INSANI', '08:00:00.000000', '07:53:47', '17:03:28.000000', '00:00:00.000000', '00:00:00.000000', '09:03:28.000000', '00:00:00.000000', 480, '09:03:28.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(868, 75, 'LAKIBUL ADZNIR A,', '08:00:00.000000', '07:54:06', '12:02:45.000000', '13:00:00.000000', '17:17:31.000000', '04:02:45.000000', '04:17:31.000000', 600, '08:20:16.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(869, 74, 'SAKUR SALMAN', '08:00:00.000000', '07:54:27', '12:03:22.000000', '13:00:00.000000', '17:16:27.000000', '04:03:22.000000', '04:16:27.000000', 600, '08:19:49.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(870, 67, 'MAHALAIL, ARJIMAR K.', '08:13:12.000000', '08:13:12', '12:01:59.000000', '13:00:00.000000', '17:10:38.000000', '03:48:47.000000', '04:10:38.000000', 486, '07:59:25.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(871, 66, 'Lenaria Joyce Ann H.', '08:15:39.000000', '08:15:39', '12:01:40.000000', '13:00:00.000000', '17:07:04.000000', '03:46:01.000000', '04:07:04.000000', 486, '07:53:05.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(872, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:15:54.000000', '08:15:54', '12:03:36.000000', '13:00:00.000000', '17:03:51.000000', '03:47:42.000000', '04:03:51.000000', 486, '07:51:33.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(873, 62, 'KASAN, PRINCE NEIL L.', '08:42:47.000000', '08:42:47', '12:00:46.000000', '13:00:00.000000', '17:00:13.000000', '03:17:59.000000', '04:00:13.000000', 540, '07:18:12.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(874, 60, 'Paul Antony J. Mazo', '08:43:05.000000', '08:43:05', '12:00:33.000000', '13:00:00.000000', '17:00:59.000000', '03:17:28.000000', '04:00:59.000000', 540, '07:18:27.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(875, 63, 'SAQUIN, NORMAN S.', '08:43:20.000000', '08:43:20', '12:01:03.000000', '13:00:00.000000', '17:00:31.000000', '03:17:43.000000', '04:00:31.000000', 540, '07:18:14.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(876, 72, 'saipol A. jameri', '08:43:47.000000', '08:43:47', '12:04:35.000000', '13:00:00.000000', '17:30:29.000000', '03:20:48.000000', '04:30:29.000000', 600, '07:51:17.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(877, 73, 'BINLADEN A JAILANI', '08:49:29.000000', '08:49:29', '12:04:09.000000', '13:00:00.000000', '17:31:44.000000', '03:14:40.000000', '04:31:44.000000', 600, '07:46:24.000000', '00:00:00.000000', '2026-03-09', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(878, 62, 'KASAN, PRINCE NEIL L.', '08:00:00.000000', '07:32:09', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 540, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(879, 63, 'SAQUIN, NORMAN S.', '08:00:00.000000', '07:32:25', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 540, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(880, 61, 'JAY RYAN R. BARTULIN', '08:00:00.000000', '07:35:33', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 54, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(881, 57, 'FLORES, DESSA M. ', '08:00:00.000000', '07:52:14', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 486, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `timesheet` (`record_id`, `intern_id`, `intern_name`, `am_timein`, `am_timein_display`, `am_timeOut`, `pm_timein`, `pm_timeout`, `am_hours_worked`, `pm_hours_worked`, `required_hours_rendered`, `day_total_hours`, `total_hours_rendered`, `created_at`, `confirm_overtime`, `overtime_start`, `overtime_hours`, `overtime_end`, `overtime_manual`, `pause_start`, `pause_end`, `pause_duration`, `pause_reason`, `notes`, `photo_data`, `photo_timestamp`, `photo_type`, `am_timein_photo`, `am_timeout_photo`, `pm_timein_photo`, `pm_timeout_photo`, `am_timein_image`, `am_timeout_image`, `pm_timein_image`, `pm_timeout_image`, `am_standard_end`, `pm_standard_end`) VALUES
+(882, 64, 'NADZWA B. INSANI', '08:00:00.000000', '07:52:32', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 480, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(883, 66, 'Lenaria Joyce Ann H.', '08:00:00.000000', '07:55:47', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 486, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(884, 74, 'SAKUR SALMAN', '08:00:00.000000', '08:00:41', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 600, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(885, 67, 'MAHALAIL, ARJIMAR K.', '08:00:00.000000', '08:00:58', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 486, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(886, 58, 'MANLIN, KAYCEE N', '08:02:57.000000', '08:02:57', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 486, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(887, 72, 'saipol A. jameri', '08:06:47.000000', '08:06:47', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 600, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(888, 71, 'Morales, Elizabeth Arbie D.', '08:07:02.000000', '08:07:02', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 252, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(889, 65, 'Tantuan Shyra Mae P.', '08:07:16.000000', '08:07:16', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 486, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(890, 70, 'Sy, Kitt Harley B.', '08:08:10.000000', '08:08:10', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 252, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(891, 60, 'Paul Antony J. Mazo', '08:08:28.000000', '08:08:28', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 540, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(892, 73, 'BINLADEN A JAILANI', '08:14:58.000000', '08:14:58', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 600, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(893, 59, 'MACAPAGAL MICKAEL ANTHONY A', '08:15:11.000000', '08:15:11', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 486, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(894, 56, 'TALAB, PRINCESS WENDY T.', '08:21:48.000000', '08:21:48', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 486, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(895, 75, 'LAKIBUL ADZNIR A,', '08:24:10.000000', '08:24:10', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 600, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(896, 68, 'Abdulla, Iris Juhra B. ', '09:44:10.000000', '09:44:10', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 252, '00:00:00.000000', '00:00:00.000000', '2026-03-10', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(897, 71, 'Morales, Elizabeth Arbie D.', '07:00:00.000000', '07:00:19', '12:00:50.000000', '13:00:00.000000', '18:00:22.000000', '05:00:50.000000', '05:00:22.000000', 252, '10:01:12.000000', '00:00:00.000000', '2026-03-16', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(898, 71, 'Morales, Elizabeth Arbie D.', '07:00:00.000000', '06:58:26', '12:01:06.000000', '13:01:09.000000', '19:00:00.000000', '05:01:06.000000', '03:00:32.000000', 252, '08:01:38.000000', '00:00:00.000000', '2026-03-17', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(899, 71, 'Morales, Elizabeth Arbie D.', '07:00:00.000000', '06:31:43', '12:00:29.000000', '13:00:00.000000', '16:01:35.000000', '05:00:29.000000', '03:01:35.000000', 252, '08:02:04.000000', '00:00:00.000000', '2026-03-19', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(900, 71, 'Morales, Elizabeth Arbie D.', '07:43:13.000000', '07:43:13', '12:01:07.000000', '00:00:00.000000', '00:00:00.000000', '04:17:54.000000', '00:00:00.000000', 252, '04:17:54.000000', '00:00:00.000000', '2026-03-24', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(907, 71, 'Morales, Elizabeth Arbie D.', '07:00:00.000000', '06:58:48', '10:37:22.000000', '00:00:00.000000', '00:00:00.000000', '03:37:22.000000', '00:00:00.000000', 252, '03:37:22.000000', '00:00:00.000000', '2026-03-26', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(913, 71, 'Morales, Elizabeth Arbie D.', '07:00:00.000000', '06:34:29', '12:00:30.000000', '13:00:00.000000', '19:00:00.000000', '06:00:00.000000', '06:00:00.000000', 252, '10:46:44.000000', '00:00:00.000000', '2026-04-14', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(917, 78, 'Morales, Elizabeth Delos Reyes', '08:00:00.000000', '08:00:06', '12:00:56.000000', '00:00:00.000000', '00:00:00.000000', '04:00:56.000000', '00:00:00.000000', 252, '04:00:56.000000', '00:00:00.000000', '2026-04-16', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(918, 71, 'Morales, Elizabeth Arbie D.', '07:01:16.000000', '07:01:16', '12:06:00.000000', '13:00:00.000000', '16:00:58.000000', '05:04:44.000000', '03:00:58.000000', 252, '08:05:42.000000', '00:00:00.000000', '2026-04-16', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(925, 71, 'Morales, Elizabeth Arbie D.', '09:04:15.000000', '09:04:15', '12:04:39.000000', '13:00:00.000000', '00:00:00.000000', '03:00:24.000000', '06:21:43.000000', 252, '09:22:07.000000', '00:00:00.000000', '2026-04-21', 0, '00:00:00.000000', '00:00:00.000000', '00:00:00.000000', 0, '00:00:00', '00:00:00', '00:00:00', NULL, NULL, NULL, NULL, 'timein', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `timesheet_photos`
+--
+
+CREATE TABLE `timesheet_photos` (
+  `id` int(11) NOT NULL,
+  `intern_id` int(11) NOT NULL,
+  `record_id` int(11) DEFAULT NULL,
+  `photo_path` varchar(255) NOT NULL,
+  `photo_type` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `timesheet_photos`
+--
+
+INSERT INTO `timesheet_photos` (`id`, `intern_id`, `record_id`, `photo_path`, `photo_type`, `created_at`) VALUES
+(9, 12, 97, 'uploads/faces/face_12_1748501261.png', 'afternoon_time_in', '2025-05-29 06:47:41'),
+(10, 13, 98, 'uploads/faces/face_13_1748509144.png', 'afternoon_time_in', '2025-05-29 08:59:04'),
+(11, 13, 98, 'uploads/faces/face_13_1748509152.png', 'afternoon_time_out', '2025-05-29 08:59:12'),
+(12, 11, 96, 'uploads/faces/face_11_1748513402.png', 'afternoon_time_in', '2025-05-29 10:10:02'),
+(13, 14, 103, 'uploads/faces/face_14_1748565401.png', 'morning_time_in', '2025-05-30 00:36:42'),
+(14, 13, 105, 'uploads/faces/face_13_1748566286.png', 'morning_time_in', '2025-05-30 00:51:26'),
+(15, 14, 103, 'uploads/faces/face_14_1748577908.png', 'afternoon_time_out', '2025-05-30 04:05:08'),
+(16, 16, 102, 'uploads/faces/face_16_1748598569.png', 'afternoon_time_out', '2025-05-30 09:49:29'),
+(17, 11, 109, 'uploads/faces/face_11_1748838825.png', 'afternoon_time_out', '2025-06-02 04:33:45'),
+(18, 16, 108, 'uploads/faces/face_16_1748838850.png', 'afternoon_time_out', '2025-06-02 04:34:10'),
+(1926, 53, 651, 'uploads/faces/face_53_1770162439.png', 'morning_time_in', '2026-02-03 23:47:20'),
+(1929, 59, 657, 'uploads/faces/face_59_1770196582.png', 'afternoon_time_out', '2026-02-04 09:16:22'),
+(1930, 52, 650, 'uploads/faces/face_52_1770196603.png', 'afternoon_time_out', '2026-02-04 09:16:43'),
+(1931, 56, 654, 'uploads/faces/face_56_1770196627.png', 'afternoon_time_out', '2026-02-04 09:17:07'),
+(1932, 57, 655, 'uploads/faces/face_57_1770196654.png', 'afternoon_time_out', '2026-02-04 09:17:34'),
+(1933, 58, 656, 'uploads/faces/face_58_1770196683.png', 'afternoon_time_out', '2026-02-04 09:18:03'),
+(1934, 53, 651, 'uploads/faces/face_53_1770196712.png', 'afternoon_time_out', '2026-02-04 09:18:32'),
+(1935, 57, 658, 'uploads/faces/face_57_1770249318.png', 'morning_time_in', '2026-02-04 23:55:18'),
+(1936, 59, 659, 'uploads/faces/face_59_1770249387.png', 'morning_time_in', '2026-02-04 23:56:27'),
+(1937, 59, 659, 'uploads/faces/face_59_1770264261.png', 'afternoon_time_out', '2026-02-05 04:04:21'),
+(1938, 57, 658, 'uploads/faces/face_57_1770264600.png', 'afternoon_time_in', '2026-02-05 04:10:00'),
+(1939, 56, 660, 'uploads/faces/face_56_1770264706.png', 'afternoon_time_out', '2026-02-05 04:11:46'),
+(1940, 58, 661, 'uploads/faces/face_58_1770264739.png', 'afternoon_time_out', '2026-02-05 04:12:19'),
+(1941, 56, 660, 'uploads/faces/face_56_1770266593.png', 'afternoon_time_in', '2026-02-05 04:43:13'),
+(1942, 58, 661, 'uploads/faces/face_58_1770266615.png', 'afternoon_time_in', '2026-02-05 04:43:35'),
+(1943, 59, 659, 'uploads/faces/face_59_1770266755.png', 'afternoon_time_in', '2026-02-05 04:45:55'),
+(1944, 59, 659, 'uploads/faces/face_59_1770282615.png', 'afternoon_time_out', '2026-02-05 09:10:15'),
+(1945, 57, 658, 'uploads/faces/face_57_1770282690.png', 'afternoon_time_out', '2026-02-05 09:11:30'),
+(1946, 58, 661, 'uploads/faces/face_58_1770282843.png', 'afternoon_time_out', '2026-02-05 09:14:03'),
+(1947, 56, 660, 'uploads/faces/face_56_1770282961.png', 'afternoon_time_out', '2026-02-05 09:16:01'),
+(1948, 57, 662, 'uploads/faces/face_57_1770335200.png', 'morning_time_in', '2026-02-05 23:46:40'),
+(1949, 59, 663, 'uploads/faces/face_59_1770335770.png', 'morning_time_in', '2026-02-05 23:56:10'),
+(1950, 56, 664, 'uploads/faces/face_56_1770336445.png', 'morning_time_in', '2026-02-06 00:07:25'),
+(1951, 58, 665, 'uploads/faces/face_58_1770337870.png', 'morning_time_in', '2026-02-06 00:31:10'),
+(1952, 59, 663, 'uploads/faces/face_59_1770350477.png', 'afternoon_time_out', '2026-02-06 04:01:17'),
+(1953, 57, 662, 'uploads/faces/face_57_1770350673.png', 'afternoon_time_out', '2026-02-06 04:04:33'),
+(1954, 56, 664, 'uploads/faces/face_56_1770350702.png', 'afternoon_time_out', '2026-02-06 04:05:02'),
+(1955, 58, 665, 'uploads/faces/face_58_1770350737.png', 'afternoon_time_out', '2026-02-06 04:05:37'),
+(1956, 59, 663, 'uploads/faces/face_59_1770353282.png', 'afternoon_time_in', '2026-02-06 04:48:02'),
+(1957, 58, 665, 'uploads/faces/face_58_1770353555.png', 'afternoon_time_in', '2026-02-06 04:52:35'),
+(1958, 59, 663, 'uploads/faces/face_59_1770368799.png', 'afternoon_time_out', '2026-02-06 09:06:39'),
+(1959, 57, 662, 'uploads/faces/face_57_1770369602.png', 'afternoon_time_out', '2026-02-06 09:20:02'),
+(1960, 58, 665, 'uploads/faces/face_58_1770369642.png', 'afternoon_time_out', '2026-02-06 09:20:42'),
+(1961, 58, 667, 'uploads/faces/face_58_1770593163.png', 'morning_time_in', '2026-02-08 23:26:03'),
+(1962, 59, 669, 'uploads/faces/face_59_1770594910.png', 'morning_time_in', '2026-02-08 23:55:11'),
+(1963, 58, 667, 'uploads/faces/face_58_1770609686.png', 'afternoon_time_out', '2026-02-09 04:01:26'),
+(1964, 56, 666, 'uploads/faces/face_56_1770609707.png', 'afternoon_time_out', '2026-02-09 04:01:47'),
+(1965, 59, 669, 'uploads/faces/face_59_1770609725.png', 'afternoon_time_in', '2026-02-09 04:02:05'),
+(1966, 59, 669, 'uploads/faces/face_59_1770609734.png', 'afternoon_time_out', '2026-02-09 04:02:14'),
+(1967, 56, 666, 'uploads/faces/face_56_1770612187.png', 'afternoon_time_in', '2026-02-09 04:43:07'),
+(1968, 58, 667, 'uploads/faces/face_58_1770612221.png', 'afternoon_time_in', '2026-02-09 04:43:41'),
+(1969, 59, 669, 'uploads/faces/face_59_1770612498.png', 'afternoon_time_in', '2026-02-09 04:48:18'),
+(1970, 59, 669, 'uploads/faces/face_59_1770624279.png', 'afternoon_time_out', '2026-02-09 08:04:39'),
+(1971, 58, 667, 'uploads/faces/face_58_1770628570.png', 'afternoon_time_out', '2026-02-09 09:16:10'),
+(1972, 58, 671, 'uploads/faces/face_58_1770681235.png', 'morning_time_in', '2026-02-09 23:53:56'),
+(1973, 59, 673, 'uploads/faces/face_59_1770681581.png', 'morning_time_in', '2026-02-09 23:59:41'),
+(1974, 59, 673, 'uploads/faces/face_59_1770696002.png', 'afternoon_time_out', '2026-02-10 04:00:02'),
+(1975, 57, 670, 'uploads/faces/face_57_1770696368.png', 'afternoon_time_out', '2026-02-10 04:06:08'),
+(1976, 58, 671, 'uploads/faces/face_58_1770696393.png', 'afternoon_time_out', '2026-02-10 04:06:33'),
+(1977, 56, 672, 'uploads/faces/face_56_1770696416.png', 'afternoon_time_out', '2026-02-10 04:06:56'),
+(1978, 59, 673, 'uploads/faces/face_59_1770699301.png', 'afternoon_time_in', '2026-02-10 04:55:01'),
+(1979, 59, 673, 'uploads/faces/face_59_1770714350.png', 'afternoon_time_out', '2026-02-10 09:05:50'),
+(1980, 57, 670, 'uploads/faces/face_57_1770714609.png', 'afternoon_time_out', '2026-02-10 09:10:09'),
+(1981, 59, 675, 'uploads/faces/face_59_1770767940.png', 'morning_time_in', '2026-02-10 23:59:01'),
+(1982, 59, 675, 'uploads/faces/face_59_1770782496.png', 'afternoon_time_out', '2026-02-11 04:01:36'),
+(1983, 58, 676, 'uploads/faces/face_58_1770782762.png', 'afternoon_time_out', '2026-02-11 04:06:02'),
+(1984, 57, 674, 'uploads/faces/face_57_1770782782.png', 'afternoon_time_out', '2026-02-11 04:06:22'),
+(1985, 56, 677, 'uploads/faces/face_56_1770782805.png', 'afternoon_time_out', '2026-02-11 04:06:45'),
+(1986, 56, 677, 'uploads/faces/face_56_1770784375.png', 'afternoon_time_in', '2026-02-11 04:32:55'),
+(1987, 59, 675, 'uploads/faces/face_59_1770784817.png', 'afternoon_time_in', '2026-02-11 04:40:17'),
+(1988, 59, 675, 'uploads/faces/face_59_1770800621.png', 'afternoon_time_out', '2026-02-11 09:03:42'),
+(1989, 59, 680, 'uploads/faces/face_59_1770854830.png', 'morning_time_in', '2026-02-12 00:07:10'),
+(1990, 59, 680, 'uploads/faces/face_59_1770868892.png', 'afternoon_time_out', '2026-02-12 04:01:32'),
+(1991, 56, 679, 'uploads/faces/face_56_1770868963.png', 'afternoon_time_out', '2026-02-12 04:02:43'),
+(1992, 57, 678, 'uploads/faces/face_57_1770868986.png', 'afternoon_time_out', '2026-02-12 04:03:06'),
+(1993, 58, 681, 'uploads/faces/face_58_1770869104.png', 'afternoon_time_out', '2026-02-12 04:05:04'),
+(1994, 58, 681, 'uploads/faces/face_58_1770872020.png', 'afternoon_time_in', '2026-02-12 04:53:40'),
+(1995, 56, 679, 'uploads/faces/face_56_1770872047.png', 'afternoon_time_in', '2026-02-12 04:54:07'),
+(1996, 59, 680, 'uploads/faces/face_59_1770872251.png', 'afternoon_time_in', '2026-02-12 04:57:31'),
+(1997, 59, 680, 'uploads/faces/face_59_1770887084.png', 'afternoon_time_out', '2026-02-12 09:04:44'),
+(1998, 57, 678, 'uploads/faces/face_57_1770887265.png', 'afternoon_time_out', '2026-02-12 09:07:45'),
+(1999, 58, 681, 'uploads/faces/face_58_1770887411.png', 'afternoon_time_out', '2026-02-12 09:10:11'),
+(2000, 58, 684, 'uploads/faces/face_58_1770942164.png', 'morning_time_in', '2026-02-13 00:22:44'),
+(2001, 56, 682, 'uploads/faces/face_56_1770955618.png', 'afternoon_time_out', '2026-02-13 04:06:58'),
+(2002, 57, 683, 'uploads/faces/face_57_1770955653.png', 'afternoon_time_out', '2026-02-13 04:07:33'),
+(2003, 58, 684, 'uploads/faces/face_58_1770955692.png', 'afternoon_time_out', '2026-02-13 04:08:12'),
+(2004, 58, 684, 'uploads/faces/face_58_1770957544.png', 'afternoon_time_in', '2026-02-13 04:39:04'),
+(2005, 56, 682, 'uploads/faces/face_56_1770974270.png', 'afternoon_time_out', '2026-02-13 09:17:50'),
+(2006, 57, 683, 'uploads/faces/face_57_1770974337.png', 'afternoon_time_out', '2026-02-13 09:18:57'),
+(2007, 58, 684, 'uploads/faces/face_58_1770974412.png', 'afternoon_time_out', '2026-02-13 09:20:12'),
+(2008, 58, 688, 'uploads/faces/face_58_1771201413.png', 'morning_time_in', '2026-02-16 00:23:34'),
+(2009, 59, 686, 'uploads/faces/face_59_1771214511.png', 'afternoon_time_out', '2026-02-16 04:01:51'),
+(2010, 57, 685, 'uploads/faces/face_57_1771214704.png', 'afternoon_time_out', '2026-02-16 04:05:04'),
+(2011, 58, 688, 'uploads/faces/face_58_1771214720.png', 'afternoon_time_out', '2026-02-16 04:05:20'),
+(2012, 56, 687, 'uploads/faces/face_56_1771214740.png', 'afternoon_time_out', '2026-02-16 04:05:40'),
+(2013, 56, 687, 'uploads/faces/face_56_1771217075.png', 'afternoon_time_in', '2026-02-16 04:44:35'),
+(2014, 58, 688, 'uploads/faces/face_58_1771217119.png', 'afternoon_time_in', '2026-02-16 04:45:19'),
+(2015, 59, 686, 'uploads/faces/face_59_1771217794.png', 'afternoon_time_in', '2026-02-16 04:56:34'),
+(2016, 59, 686, 'uploads/faces/face_59_1771232589.png', 'afternoon_time_out', '2026-02-16 09:03:09'),
+(2017, 56, 687, 'uploads/faces/face_56_1771237081.png', 'afternoon_time_out', '2026-02-16 10:18:01'),
+(2018, 57, 685, 'uploads/faces/face_57_1771237097.png', 'afternoon_time_out', '2026-02-16 10:18:17'),
+(2019, 58, 688, 'uploads/faces/face_58_1771237109.png', 'afternoon_time_out', '2026-02-16 10:18:29'),
+(2020, 57, 689, 'uploads/faces/face_57_1771372340.png', 'morning_time_in', '2026-02-17 23:52:20'),
+(2021, 59, 690, 'uploads/faces/face_59_1771374085.png', 'morning_time_in', '2026-02-18 00:21:25'),
+(2022, 60, 692, 'uploads/faces/face_60_1771374304.png', 'morning_time_in', '2026-02-18 00:25:04'),
+(2023, 61, 693, 'uploads/faces/face_61_1771374501.png', 'morning_time_in', '2026-02-18 00:28:21'),
+(2024, 59, 690, 'uploads/faces/face_59_1771387291.png', 'afternoon_time_out', '2026-02-18 04:01:31'),
+(2025, 57, 689, 'uploads/faces/face_57_1771387397.png', 'afternoon_time_out', '2026-02-18 04:03:17'),
+(2026, 56, 691, 'uploads/faces/face_56_1771387413.png', 'afternoon_time_out', '2026-02-18 04:03:33'),
+(2027, 60, 692, 'uploads/faces/face_60_1771387429.png', 'afternoon_time_out', '2026-02-18 04:03:49'),
+(2028, 61, 693, 'uploads/faces/face_61_1771387451.png', 'afternoon_time_out', '2026-02-18 04:04:11'),
+(2029, 62, 694, 'uploads/faces/face_62_1771387473.png', 'afternoon_time_out', '2026-02-18 04:04:33'),
+(2030, 63, 695, 'uploads/faces/face_63_1771387494.png', 'afternoon_time_out', '2026-02-18 04:04:54'),
+(2031, 62, 694, 'uploads/faces/face_62_1771389728.png', 'afternoon_time_in', '2026-02-18 04:42:08'),
+(2032, 63, 695, 'uploads/faces/face_63_1771389756.png', 'afternoon_time_in', '2026-02-18 04:42:36'),
+(2033, 61, 693, 'uploads/faces/face_61_1771389802.png', 'afternoon_time_in', '2026-02-18 04:43:22'),
+(2034, 57, 689, 'uploads/faces/face_57_1771389925.png', 'afternoon_time_in', '2026-02-18 04:45:25'),
+(2035, 56, 691, 'uploads/faces/face_56_1771389942.png', 'afternoon_time_in', '2026-02-18 04:45:42'),
+(2036, 59, 690, 'uploads/faces/face_59_1771390652.png', 'afternoon_time_in', '2026-02-18 04:57:32'),
+(2037, 65, 696, 'uploads/faces/face_65_1771390858.png', 'afternoon_time_in', '2026-02-18 05:00:58'),
+(2038, 65, 696, 'uploads/faces/face_65_1771390874.png', 'afternoon_time_in', '2026-02-18 05:01:14'),
+(2039, 65, 696, 'uploads/faces/face_65_1771390895.png', 'afternoon_time_in', '2026-02-18 05:01:35'),
+(2040, 64, 697, 'uploads/faces/face_64_1771390921.png', 'afternoon_time_in', '2026-02-18 05:02:01'),
+(2041, 58, 698, 'uploads/faces/face_58_1771391160.png', 'afternoon_time_in', '2026-02-18 05:06:00'),
+(2042, 67, 699, 'uploads/faces/face_67_1771392102.png', 'afternoon_time_in', '2026-02-18 05:21:43'),
+(2043, 57, 689, 'uploads/faces/face_57_1771403422.png', 'afternoon_time_out', '2026-02-18 08:30:22'),
+(2044, 59, 690, 'uploads/faces/face_59_1771405322.png', 'afternoon_time_out', '2026-02-18 09:02:02'),
+(2045, 56, 691, 'uploads/faces/face_56_1771405422.png', 'afternoon_time_out', '2026-02-18 09:03:42'),
+(2046, 58, 698, 'uploads/faces/face_58_1771405589.png', 'afternoon_time_out', '2026-02-18 09:06:29'),
+(2047, 58, 698, 'uploads/faces/face_58_1771405606.png', 'afternoon_time_out', '2026-02-18 09:06:46'),
+(2048, 64, 697, 'uploads/faces/face_64_1771405737.png', 'afternoon_time_out', '2026-02-18 09:08:57'),
+(2049, 65, 696, 'uploads/faces/face_65_1771405787.png', 'afternoon_time_out', '2026-02-18 09:09:47'),
+(2050, 67, 699, 'uploads/faces/face_67_1771405875.png', 'afternoon_time_out', '2026-02-18 09:11:15'),
+(2051, 60, 692, 'uploads/faces/face_60_1771406909.png', 'afternoon_time_out', '2026-02-18 09:28:29'),
+(2052, 61, 693, 'uploads/faces/face_61_1771406954.png', 'afternoon_time_out', '2026-02-18 09:29:14'),
+(2053, 62, 694, 'uploads/faces/face_62_1771407304.png', 'afternoon_time_out', '2026-02-18 09:35:04'),
+(2054, 63, 695, 'uploads/faces/face_63_1771407325.png', 'afternoon_time_out', '2026-02-18 09:35:25'),
+(2055, 66, 709, 'uploads/faces/face_66_1771459411.png', 'morning_time_in', '2026-02-19 00:03:31'),
+(2056, 56, 710, 'uploads/faces/face_56_1771460282.png', 'morning_time_in', '2026-02-19 00:18:02'),
+(2057, 58, 711, 'uploads/faces/face_58_1771460930.png', 'morning_time_in', '2026-02-19 00:28:50'),
+(2058, 67, 701, 'uploads/faces/face_67_1771473681.png', 'afternoon_time_out', '2026-02-19 04:01:21'),
+(2059, 62, 704, 'uploads/faces/face_62_1771473700.png', 'afternoon_time_out', '2026-02-19 04:01:40'),
+(2060, 59, 706, 'uploads/faces/face_59_1771473723.png', 'afternoon_time_out', '2026-02-19 04:02:03'),
+(2061, 66, 709, 'uploads/faces/face_66_1771473738.png', 'afternoon_time_out', '2026-02-19 04:02:18'),
+(2062, 63, 705, 'uploads/faces/face_63_1771473756.png', 'afternoon_time_out', '2026-02-19 04:02:36'),
+(2063, 60, 707, 'uploads/faces/face_60_1771473772.png', 'afternoon_time_out', '2026-02-19 04:02:52'),
+(2064, 61, 708, 'uploads/faces/face_61_1771473803.png', 'afternoon_time_out', '2026-02-19 04:03:23'),
+(2065, 65, 703, 'uploads/faces/face_65_1771473819.png', 'afternoon_time_out', '2026-02-19 04:03:39'),
+(2066, 64, 702, 'uploads/faces/face_64_1771473844.png', 'afternoon_time_out', '2026-02-19 04:04:04'),
+(2067, 57, 700, 'uploads/faces/face_57_1771474111.png', 'afternoon_time_out', '2026-02-19 04:08:31'),
+(2068, 58, 711, 'uploads/faces/face_58_1771474169.png', 'afternoon_time_out', '2026-02-19 04:09:29'),
+(2069, 56, 710, 'uploads/faces/face_56_1771474207.png', 'afternoon_time_out', '2026-02-19 04:10:07'),
+(2070, 61, 708, 'uploads/faces/face_61_1771475568.png', 'afternoon_time_in', '2026-02-19 04:32:48'),
+(2071, 62, 704, 'uploads/faces/face_62_1771475594.png', 'afternoon_time_in', '2026-02-19 04:33:14'),
+(2072, 63, 705, 'uploads/faces/face_63_1771475610.png', 'afternoon_time_in', '2026-02-19 04:33:30'),
+(2073, 67, 701, 'uploads/faces/face_67_1771475926.png', 'afternoon_time_in', '2026-02-19 04:38:46'),
+(2074, 65, 703, 'uploads/faces/face_65_1771475957.png', 'afternoon_time_in', '2026-02-19 04:39:17'),
+(2075, 64, 702, 'uploads/faces/face_64_1771475997.png', 'afternoon_time_in', '2026-02-19 04:39:57'),
+(2076, 57, 700, 'uploads/faces/face_57_1771476451.png', 'afternoon_time_in', '2026-02-19 04:47:31'),
+(2077, 56, 710, 'uploads/faces/face_56_1771476505.png', 'afternoon_time_in', '2026-02-19 04:48:25'),
+(2078, 56, 710, 'uploads/faces/face_56_1771476534.png', 'afternoon_time_in', '2026-02-19 04:48:54'),
+(2079, 58, 711, 'uploads/faces/face_58_1771476577.png', 'afternoon_time_in', '2026-02-19 04:49:37'),
+(2080, 59, 706, 'uploads/faces/face_59_1771476849.png', 'afternoon_time_in', '2026-02-19 04:54:09'),
+(2081, 66, 709, 'uploads/faces/face_66_1771476988.png', 'afternoon_time_in', '2026-02-19 04:56:28'),
+(2082, 65, 703, 'uploads/faces/face_65_1771491670.png', 'afternoon_time_out', '2026-02-19 09:01:10'),
+(2083, 59, 706, 'uploads/faces/face_59_1771491688.png', 'afternoon_time_out', '2026-02-19 09:01:28'),
+(2084, 67, 701, 'uploads/faces/face_67_1771491711.png', 'afternoon_time_out', '2026-02-19 09:01:51'),
+(2085, 62, 704, 'uploads/faces/face_62_1771491772.png', 'afternoon_time_out', '2026-02-19 09:02:52'),
+(2086, 63, 705, 'uploads/faces/face_63_1771491804.png', 'afternoon_time_out', '2026-02-19 09:03:24'),
+(2087, 66, 709, 'uploads/faces/face_66_1771491822.png', 'afternoon_time_out', '2026-02-19 09:03:42'),
+(2088, 64, 702, 'uploads/faces/face_64_1771491847.png', 'afternoon_time_out', '2026-02-19 09:04:07'),
+(2089, 61, 708, 'uploads/faces/face_61_1771491876.png', 'afternoon_time_out', '2026-02-19 09:04:36'),
+(2090, 60, 707, 'uploads/faces/face_60_1771491899.png', 'afternoon_time_out', '2026-02-19 09:04:59'),
+(2091, 57, 700, 'uploads/faces/face_57_1771491996.png', 'afternoon_time_out', '2026-02-19 09:06:36'),
+(2092, 58, 711, 'uploads/faces/face_58_1771492055.png', 'afternoon_time_out', '2026-02-19 09:07:35'),
+(2093, 56, 710, 'uploads/faces/face_56_1771492129.png', 'afternoon_time_out', '2026-02-19 09:08:49'),
+(2094, 68, 713, 'uploads/faces/face_68_1771544191.png', 'morning_time_in', '2026-02-19 23:36:32'),
+(2095, 65, 714, 'uploads/faces/face_65_1771544250.png', 'morning_time_in', '2026-02-19 23:37:30'),
+(2096, 53, 715, 'uploads/faces/face_53_1771544307.png', 'morning_time_in', '2026-02-19 23:38:27'),
+(2097, 69, 716, 'uploads/faces/face_69_1771544326.png', 'morning_time_in', '2026-02-19 23:38:46'),
+(2098, 60, 717, 'uploads/faces/face_60_1771544436.png', 'morning_time_in', '2026-02-19 23:40:36'),
+(2099, 70, 718, 'uploads/faces/face_70_1771544488.png', 'morning_time_in', '2026-02-19 23:41:29'),
+(2100, 57, 719, 'uploads/faces/face_57_1771544889.png', 'morning_time_in', '2026-02-19 23:48:09'),
+(2101, 62, 720, 'uploads/faces/face_62_1771544918.png', 'morning_time_in', '2026-02-19 23:48:38'),
+(2102, 63, 721, 'uploads/faces/face_63_1771544939.png', 'morning_time_in', '2026-02-19 23:48:59'),
+(2103, 64, 722, 'uploads/faces/face_64_1771544959.png', 'morning_time_in', '2026-02-19 23:49:20'),
+(2104, 71, 723, 'uploads/faces/face_71_1771545145.png', 'morning_time_in', '2026-02-19 23:52:25'),
+(2105, 67, 724, 'uploads/faces/face_67_1771545257.png', 'morning_time_in', '2026-02-19 23:54:17'),
+(2106, 61, 725, 'uploads/faces/face_61_1771545560.png', 'morning_time_in', '2026-02-19 23:59:20'),
+(2107, 66, 726, 'uploads/faces/face_66_1771545613.png', 'morning_time_in', '2026-02-20 00:00:13'),
+(2108, 59, 727, 'uploads/faces/face_59_1771546063.png', 'morning_time_in', '2026-02-20 00:07:43'),
+(2109, 56, 728, 'uploads/faces/face_56_1771546499.png', 'morning_time_in', '2026-02-20 00:14:59'),
+(2110, 58, 729, 'uploads/faces/face_58_1771547115.png', 'morning_time_in', '2026-02-20 00:25:15'),
+(2111, 59, 727, 'uploads/faces/face_59_1771560065.png', 'afternoon_time_out', '2026-02-20 04:01:05'),
+(2112, 52, 712, 'uploads/faces/face_52_1771560121.png', 'afternoon_time_out', '2026-02-20 04:02:01'),
+(2113, 52, 712, 'uploads/faces/face_52_1771560143.png', 'afternoon_time_out', '2026-02-20 04:02:23'),
+(2114, 53, 715, 'uploads/faces/face_53_1771560159.png', 'afternoon_time_out', '2026-02-20 04:02:39'),
+(2115, 67, 724, 'uploads/faces/face_67_1771560184.png', 'afternoon_time_out', '2026-02-20 04:03:04'),
+(2116, 65, 714, 'uploads/faces/face_65_1771560200.png', 'afternoon_time_out', '2026-02-20 04:03:20'),
+(2117, 66, 726, 'uploads/faces/face_66_1771560237.png', 'afternoon_time_out', '2026-02-20 04:03:57'),
+(2118, 64, 722, 'uploads/faces/face_64_1771560302.png', 'afternoon_time_out', '2026-02-20 04:05:02'),
+(2119, 68, 713, 'uploads/faces/face_68_1771560323.png', 'afternoon_time_out', '2026-02-20 04:05:23'),
+(2120, 69, 716, 'uploads/faces/face_69_1771560339.png', 'afternoon_time_out', '2026-02-20 04:05:39'),
+(2121, 62, 720, 'uploads/faces/face_62_1771560377.png', 'afternoon_time_out', '2026-02-20 04:06:17'),
+(2122, 61, 725, 'uploads/faces/face_61_1771560394.png', 'afternoon_time_out', '2026-02-20 04:06:34'),
+(2123, 57, 719, 'uploads/faces/face_57_1771560411.png', 'afternoon_time_out', '2026-02-20 04:06:51'),
+(2124, 58, 729, 'uploads/faces/face_58_1771560433.png', 'afternoon_time_out', '2026-02-20 04:07:13'),
+(2125, 56, 728, 'uploads/faces/face_56_1771560450.png', 'afternoon_time_out', '2026-02-20 04:07:30'),
+(2126, 70, 718, 'uploads/faces/face_70_1771561086.png', 'afternoon_time_out', '2026-02-20 04:18:06'),
+(2127, 71, 723, 'uploads/faces/face_71_1771561111.png', 'afternoon_time_out', '2026-02-20 04:18:31'),
+(2128, 61, 725, 'uploads/faces/face_61_1771561868.png', 'afternoon_time_in', '2026-02-20 04:31:08'),
+(2129, 62, 720, 'uploads/faces/face_62_1771561888.png', 'afternoon_time_in', '2026-02-20 04:31:28'),
+(2130, 57, 719, 'uploads/faces/face_57_1771562760.png', 'afternoon_time_in', '2026-02-20 04:46:00'),
+(2131, 58, 729, 'uploads/faces/face_58_1771562803.png', 'afternoon_time_in', '2026-02-20 04:46:43'),
+(2132, 53, 715, 'uploads/faces/face_53_1771562846.png', 'afternoon_time_in', '2026-02-20 04:47:26'),
+(2133, 56, 728, 'uploads/faces/face_56_1771562899.png', 'afternoon_time_in', '2026-02-20 04:48:19'),
+(2134, 68, 713, 'uploads/faces/face_68_1771563335.png', 'afternoon_time_in', '2026-02-20 04:55:35'),
+(2135, 69, 716, 'uploads/faces/face_69_1771563366.png', 'afternoon_time_in', '2026-02-20 04:56:06'),
+(2136, 71, 723, 'uploads/faces/face_71_1771563397.png', 'afternoon_time_in', '2026-02-20 04:56:37'),
+(2137, 59, 727, 'uploads/faces/face_59_1771563411.png', 'afternoon_time_in', '2026-02-20 04:56:51'),
+(2138, 70, 718, 'uploads/faces/face_70_1771563433.png', 'afternoon_time_in', '2026-02-20 04:57:13'),
+(2139, 60, 717, 'uploads/faces/face_60_1771578036.png', 'afternoon_time_out', '2026-02-20 09:00:36'),
+(2140, 62, 720, 'uploads/faces/face_62_1771578057.png', 'afternoon_time_out', '2026-02-20 09:00:57'),
+(2141, 63, 721, 'uploads/faces/face_63_1771578093.png', 'afternoon_time_out', '2026-02-20 09:01:33'),
+(2142, 68, 713, 'uploads/faces/face_68_1771578157.png', 'afternoon_time_out', '2026-02-20 09:02:37'),
+(2143, 71, 723, 'uploads/faces/face_71_1771578178.png', 'afternoon_time_out', '2026-02-20 09:02:58'),
+(2144, 69, 716, 'uploads/faces/face_69_1771578203.png', 'afternoon_time_out', '2026-02-20 09:03:23'),
+(2145, 69, 716, 'uploads/faces/face_69_1771578221.png', 'afternoon_time_out', '2026-02-20 09:03:41'),
+(2146, 70, 718, 'uploads/faces/face_70_1771578240.png', 'afternoon_time_out', '2026-02-20 09:04:00'),
+(2147, 59, 727, 'uploads/faces/face_59_1771578251.png', 'afternoon_time_out', '2026-02-20 09:04:11'),
+(2148, 61, 725, 'uploads/faces/face_61_1771578311.png', 'afternoon_time_out', '2026-02-20 09:05:11'),
+(2149, 57, 719, 'uploads/faces/face_57_1771578596.png', 'afternoon_time_out', '2026-02-20 09:09:56'),
+(2150, 56, 728, 'uploads/faces/face_56_1771578630.png', 'afternoon_time_out', '2026-02-20 09:10:30'),
+(2151, 58, 729, 'uploads/faces/face_58_1771578671.png', 'afternoon_time_out', '2026-02-20 09:11:11'),
+(2152, 62, 730, 'uploads/faces/face_62_1771804275.png', 'morning_time_in', '2026-02-22 23:51:15'),
+(2153, 63, 731, 'uploads/faces/face_63_1771804299.png', 'morning_time_in', '2026-02-22 23:51:40'),
+(2154, 61, 732, 'uploads/faces/face_61_1771804330.png', 'morning_time_in', '2026-02-22 23:52:11'),
+(2155, 65, 733, 'uploads/faces/face_65_1771804348.png', 'morning_time_in', '2026-02-22 23:52:28'),
+(2156, 57, 734, 'uploads/faces/face_57_1771804364.png', 'morning_time_in', '2026-02-22 23:52:44'),
+(2157, 67, 736, 'uploads/faces/face_67_1771806199.png', 'morning_time_in', '2026-02-23 00:23:20'),
+(2158, 64, 737, 'uploads/faces/face_64_1771806214.png', 'morning_time_in', '2026-02-23 00:23:34'),
+(2159, 56, 738, 'uploads/faces/face_56_1771807743.png', 'morning_time_in', '2026-02-23 00:49:03'),
+(2160, 58, 739, 'uploads/faces/face_58_1771807761.png', 'morning_time_in', '2026-02-23 00:49:21'),
+(2161, 60, 735, 'uploads/faces/face_60_1771819252.png', 'afternoon_time_out', '2026-02-23 04:00:52'),
+(2162, 61, 732, 'uploads/faces/face_61_1771819269.png', 'afternoon_time_out', '2026-02-23 04:01:09'),
+(2163, 62, 730, 'uploads/faces/face_62_1771819284.png', 'afternoon_time_out', '2026-02-23 04:01:24'),
+(2164, 63, 731, 'uploads/faces/face_63_1771819300.png', 'afternoon_time_out', '2026-02-23 04:01:40'),
+(2165, 65, 733, 'uploads/faces/face_65_1771819315.png', 'afternoon_time_out', '2026-02-23 04:01:55'),
+(2166, 67, 736, 'uploads/faces/face_67_1771819479.png', 'afternoon_time_out', '2026-02-23 04:04:39'),
+(2167, 64, 737, 'uploads/faces/face_64_1771819501.png', 'afternoon_time_out', '2026-02-23 04:05:01'),
+(2168, 57, 734, 'uploads/faces/face_57_1771819548.png', 'afternoon_time_out', '2026-02-23 04:05:48'),
+(2169, 58, 739, 'uploads/faces/face_58_1771819567.png', 'afternoon_time_out', '2026-02-23 04:06:07'),
+(2170, 56, 738, 'uploads/faces/face_56_1771819613.png', 'afternoon_time_out', '2026-02-23 04:06:53'),
+(2171, 60, 735, 'uploads/faces/face_60_1771820595.png', 'afternoon_time_in', '2026-02-23 04:23:15'),
+(2172, 63, 731, 'uploads/faces/face_63_1771820611.png', 'afternoon_time_in', '2026-02-23 04:23:31'),
+(2173, 61, 732, 'uploads/faces/face_61_1771820683.png', 'afternoon_time_in', '2026-02-23 04:24:43'),
+(2174, 65, 733, 'uploads/faces/face_65_1771821477.png', 'afternoon_time_in', '2026-02-23 04:37:57'),
+(2175, 64, 737, 'uploads/faces/face_64_1771821506.png', 'afternoon_time_in', '2026-02-23 04:38:26'),
+(2176, 67, 736, 'uploads/faces/face_67_1771821641.png', 'afternoon_time_in', '2026-02-23 04:40:41'),
+(2177, 57, 734, 'uploads/faces/face_57_1771821939.png', 'afternoon_time_in', '2026-02-23 04:45:39'),
+(2178, 58, 739, 'uploads/faces/face_58_1771821969.png', 'afternoon_time_in', '2026-02-23 04:46:09'),
+(2179, 56, 738, 'uploads/faces/face_56_1771821991.png', 'afternoon_time_in', '2026-02-23 04:46:31'),
+(2180, 62, 730, 'uploads/faces/face_62_1771822008.png', 'afternoon_time_in', '2026-02-23 04:46:48'),
+(2181, 59, 740, 'uploads/faces/face_59_1771822343.png', 'afternoon_time_in', '2026-02-23 04:52:23'),
+(2182, 62, 730, 'uploads/faces/face_62_1771837229.png', 'afternoon_time_out', '2026-02-23 09:00:29'),
+(2183, 60, 735, 'uploads/faces/face_60_1771837248.png', 'afternoon_time_out', '2026-02-23 09:00:48'),
+(2184, 61, 732, 'uploads/faces/face_61_1771837267.png', 'afternoon_time_out', '2026-02-23 09:01:07'),
+(2185, 63, 731, 'uploads/faces/face_63_1771837286.png', 'afternoon_time_out', '2026-02-23 09:01:26'),
+(2186, 59, 740, 'uploads/faces/face_59_1771837330.png', 'afternoon_time_out', '2026-02-23 09:02:10'),
+(2187, 65, 733, 'uploads/faces/face_65_1771837421.png', 'afternoon_time_out', '2026-02-23 09:03:41'),
+(2188, 57, 734, 'uploads/faces/face_57_1771837636.png', 'afternoon_time_out', '2026-02-23 09:07:16'),
+(2189, 58, 739, 'uploads/faces/face_58_1771837671.png', 'afternoon_time_out', '2026-02-23 09:07:51'),
+(2190, 56, 738, 'uploads/faces/face_56_1771837694.png', 'afternoon_time_out', '2026-02-23 09:08:14'),
+(2191, 64, 737, 'uploads/faces/face_64_1771838608.png', 'afternoon_time_out', '2026-02-23 09:23:28'),
+(2192, 64, 737, 'uploads/faces/face_64_1771838654.png', 'afternoon_time_out', '2026-02-23 09:24:14'),
+(2193, 70, 741, 'uploads/faces/face_70_1771889131.png', 'morning_time_in', '2026-02-23 23:25:31'),
+(2194, 71, 742, 'uploads/faces/face_71_1771890132.png', 'morning_time_in', '2026-02-23 23:42:12'),
+(2195, 65, 743, 'uploads/faces/face_65_1771890504.png', 'morning_time_in', '2026-02-23 23:48:24'),
+(2196, 69, 744, 'uploads/faces/face_69_1771890804.png', 'morning_time_in', '2026-02-23 23:53:24'),
+(2197, 62, 745, 'uploads/faces/face_62_1771890862.png', 'morning_time_in', '2026-02-23 23:54:22'),
+(2198, 63, 746, 'uploads/faces/face_63_1771890889.png', 'morning_time_in', '2026-02-23 23:54:49'),
+(2199, 64, 747, 'uploads/faces/face_64_1771890950.png', 'morning_time_in', '2026-02-23 23:55:50'),
+(2200, 67, 748, 'uploads/faces/face_67_1771891178.png', 'morning_time_in', '2026-02-23 23:59:38'),
+(2201, 68, 749, 'uploads/faces/face_68_1771891191.png', 'morning_time_in', '2026-02-23 23:59:51'),
+(2202, 57, 750, 'uploads/faces/face_57_1771891210.png', 'morning_time_in', '2026-02-24 00:00:10'),
+(2203, 59, 751, 'uploads/faces/face_59_1771891302.png', 'morning_time_in', '2026-02-24 00:01:42'),
+(2204, 66, 752, 'uploads/faces/face_66_1771891809.png', 'morning_time_in', '2026-02-24 00:10:09'),
+(2205, 58, 753, 'uploads/faces/face_58_1771891992.png', 'morning_time_in', '2026-02-24 00:13:12'),
+(2206, 61, 754, 'uploads/faces/face_61_1771892135.png', 'morning_time_in', '2026-02-24 00:15:36'),
+(2207, 56, 756, 'uploads/faces/face_56_1771892465.png', 'morning_time_in', '2026-02-24 00:21:05'),
+(2208, 61, 754, 'uploads/faces/face_61_1771905684.png', 'afternoon_time_out', '2026-02-24 04:01:24'),
+(2209, 64, 747, 'uploads/faces/face_64_1771905732.png', 'afternoon_time_out', '2026-02-24 04:02:12'),
+(2210, 66, 752, 'uploads/faces/face_66_1771905765.png', 'afternoon_time_out', '2026-02-24 04:02:45'),
+(2211, 67, 748, 'uploads/faces/face_67_1771905787.png', 'afternoon_time_out', '2026-02-24 04:03:07'),
+(2212, 65, 743, 'uploads/faces/face_65_1771905812.png', 'afternoon_time_out', '2026-02-24 04:03:32'),
+(2213, 70, 741, 'uploads/faces/face_70_1771905842.png', 'afternoon_time_out', '2026-02-24 04:04:02'),
+(2214, 58, 753, 'uploads/faces/face_58_1771905922.png', 'afternoon_time_out', '2026-02-24 04:05:22'),
+(2215, 57, 750, 'uploads/faces/face_57_1771905937.png', 'afternoon_time_out', '2026-02-24 04:05:37'),
+(2216, 56, 756, 'uploads/faces/face_56_1771905960.png', 'afternoon_time_out', '2026-02-24 04:06:00'),
+(2217, 57, 750, 'uploads/faces/face_57_1771908551.png', 'afternoon_time_in', '2026-02-24 04:49:11'),
+(2218, 58, 753, 'uploads/faces/face_58_1771908575.png', 'afternoon_time_in', '2026-02-24 04:49:35'),
+(2219, 56, 756, 'uploads/faces/face_56_1771908596.png', 'afternoon_time_in', '2026-02-24 04:49:56'),
+(2220, 65, 743, 'uploads/faces/face_65_1771908643.png', 'afternoon_time_in', '2026-02-24 04:50:43'),
+(2221, 67, 748, 'uploads/faces/face_67_1771908727.png', 'afternoon_time_in', '2026-02-24 04:52:07'),
+(2222, 66, 752, 'uploads/faces/face_66_1771908745.png', 'afternoon_time_in', '2026-02-24 04:52:25'),
+(2223, 64, 747, 'uploads/faces/face_64_1771908774.png', 'afternoon_time_in', '2026-02-24 04:52:54'),
+(2224, 68, 749, 'uploads/faces/face_68_1771908989.png', 'afternoon_time_out', '2026-02-24 04:56:29'),
+(2225, 68, 749, 'uploads/faces/face_68_1771909024.png', 'afternoon_time_in', '2026-02-24 04:57:04'),
+(2226, 71, 742, 'uploads/faces/face_71_1771909048.png', 'afternoon_time_out', '2026-02-24 04:57:28'),
+(2227, 71, 742, 'uploads/faces/face_71_1771909083.png', 'afternoon_time_in', '2026-02-24 04:58:03'),
+(2228, 70, 741, 'uploads/faces/face_70_1771909385.png', 'afternoon_time_in', '2026-02-24 05:03:05'),
+(2229, 62, 745, 'uploads/faces/face_62_1771923644.png', 'afternoon_time_out', '2026-02-24 09:00:44'),
+(2230, 63, 746, 'uploads/faces/face_63_1771923669.png', 'afternoon_time_out', '2026-02-24 09:01:09'),
+(2231, 59, 751, 'uploads/faces/face_59_1771923683.png', 'afternoon_time_out', '2026-02-24 09:01:23'),
+(2232, 67, 748, 'uploads/faces/face_67_1771923710.png', 'afternoon_time_out', '2026-02-24 09:01:50'),
+(2233, 65, 743, 'uploads/faces/face_65_1771923831.png', 'afternoon_time_out', '2026-02-24 09:03:51'),
+(2234, 57, 750, 'uploads/faces/face_57_1771923979.png', 'afternoon_time_out', '2026-02-24 09:06:19'),
+(2235, 58, 753, 'uploads/faces/face_58_1771924008.png', 'afternoon_time_out', '2026-02-24 09:06:48'),
+(2236, 56, 756, 'uploads/faces/face_56_1771924035.png', 'afternoon_time_out', '2026-02-24 09:07:15'),
+(2237, 64, 747, 'uploads/faces/face_64_1771924311.png', 'afternoon_time_out', '2026-02-24 09:11:51'),
+(2238, 66, 752, 'uploads/faces/face_66_1771924336.png', 'afternoon_time_out', '2026-02-24 09:12:16'),
+(2239, 71, 742, 'uploads/faces/face_71_1771924403.png', 'afternoon_time_out', '2026-02-24 09:13:23'),
+(2240, 69, 744, 'uploads/faces/face_69_1771924600.png', 'afternoon_time_out', '2026-02-24 09:16:40'),
+(2241, 60, 755, 'uploads/faces/face_60_1771924625.png', 'afternoon_time_out', '2026-02-24 09:17:05'),
+(2242, 68, 749, 'uploads/faces/face_68_1771924714.png', 'afternoon_time_out', '2026-02-24 09:18:34'),
+(2243, 70, 741, 'uploads/faces/face_70_1771924760.png', 'afternoon_time_out', '2026-02-24 09:19:20'),
+(2244, 66, 757, 'uploads/faces/face_66_1771976657.png', 'morning_time_in', '2026-02-24 23:44:17'),
+(2245, 65, 758, 'uploads/faces/face_65_1771976724.png', 'morning_time_in', '2026-02-24 23:45:24'),
+(2246, 57, 759, 'uploads/faces/face_57_1771976771.png', 'morning_time_in', '2026-02-24 23:46:11'),
+(2247, 63, 760, 'uploads/faces/face_63_1771976862.png', 'morning_time_in', '2026-02-24 23:47:42'),
+(2248, 62, 761, 'uploads/faces/face_62_1771976896.png', 'morning_time_in', '2026-02-24 23:48:16'),
+(2249, 64, 762, 'uploads/faces/face_64_1771977170.png', 'morning_time_in', '2026-02-24 23:52:50'),
+(2250, 59, 763, 'uploads/faces/face_59_1771978075.png', 'morning_time_in', '2026-02-25 00:07:55'),
+(2251, 60, 764, 'uploads/faces/face_60_1771978144.png', 'morning_time_in', '2026-02-25 00:09:04'),
+(2252, 58, 765, 'uploads/faces/face_58_1771978574.png', 'morning_time_in', '2026-02-25 00:16:15'),
+(2253, 61, 766, 'uploads/faces/face_61_1771978808.png', 'morning_time_in', '2026-02-25 00:20:08'),
+(2254, 56, 767, 'uploads/faces/face_56_1771980028.png', 'morning_time_in', '2026-02-25 00:40:28'),
+(2255, 67, 768, 'uploads/faces/face_67_1771981583.png', 'morning_time_in', '2026-02-25 01:06:23'),
+(2256, 62, 761, 'uploads/faces/face_62_1771992055.png', 'afternoon_time_out', '2026-02-25 04:00:55'),
+(2257, 61, 766, 'uploads/faces/face_61_1771992076.png', 'afternoon_time_out', '2026-02-25 04:01:16'),
+(2258, 63, 760, 'uploads/faces/face_63_1771992097.png', 'afternoon_time_out', '2026-02-25 04:01:37'),
+(2259, 60, 764, 'uploads/faces/face_60_1771992112.png', 'afternoon_time_out', '2026-02-25 04:01:52'),
+(2260, 59, 763, 'uploads/faces/face_59_1771992131.png', 'afternoon_time_out', '2026-02-25 04:02:11'),
+(2261, 65, 758, 'uploads/faces/face_65_1771992153.png', 'afternoon_time_in', '2026-02-25 04:02:33'),
+(2262, 65, 758, 'uploads/faces/face_65_1771992163.png', 'afternoon_time_out', '2026-02-25 04:02:43'),
+(2263, 57, 759, 'uploads/faces/face_57_1771992266.png', 'afternoon_time_out', '2026-02-25 04:04:26'),
+(2264, 58, 765, 'uploads/faces/face_58_1771992293.png', 'afternoon_time_out', '2026-02-25 04:04:53'),
+(2265, 66, 757, 'uploads/faces/face_66_1771992448.png', 'afternoon_time_out', '2026-02-25 04:07:28'),
+(2266, 56, 767, 'uploads/faces/face_56_1771992498.png', 'afternoon_time_out', '2026-02-25 04:08:18'),
+(2267, 66, 757, 'uploads/faces/face_66_1771994202.png', 'afternoon_time_in', '2026-02-25 04:36:42'),
+(2268, 61, 766, 'uploads/faces/face_61_1771994321.png', 'afternoon_time_in', '2026-02-25 04:38:41'),
+(2269, 63, 760, 'uploads/faces/face_63_1771994334.png', 'afternoon_time_in', '2026-02-25 04:38:54'),
+(2270, 57, 759, 'uploads/faces/face_57_1771994371.png', 'afternoon_time_in', '2026-02-25 04:39:31'),
+(2271, 58, 765, 'uploads/faces/face_58_1771994388.png', 'afternoon_time_in', '2026-02-25 04:39:48'),
+(2272, 56, 767, 'uploads/faces/face_56_1771994410.png', 'afternoon_time_in', '2026-02-25 04:40:10'),
+(2273, 62, 761, 'uploads/faces/face_62_1771994431.png', 'afternoon_time_in', '2026-02-25 04:40:31'),
+(2274, 65, 758, 'uploads/faces/face_65_1771994531.png', 'afternoon_time_in', '2026-02-25 04:42:11'),
+(2275, 59, 763, 'uploads/faces/face_59_1771995123.png', 'afternoon_time_in', '2026-02-25 04:52:03'),
+(2276, 62, 761, 'uploads/faces/face_62_1772010014.png', 'afternoon_time_out', '2026-02-25 09:00:14'),
+(2277, 63, 760, 'uploads/faces/face_63_1772010040.png', 'afternoon_time_out', '2026-02-25 09:00:40'),
+(2278, 57, 759, 'uploads/faces/face_57_1772010244.png', 'afternoon_time_out', '2026-02-25 09:04:04'),
+(2279, 64, 762, 'uploads/faces/face_64_1772010345.png', 'afternoon_time_out', '2026-02-25 09:05:45'),
+(2280, 66, 757, 'uploads/faces/face_66_1772010377.png', 'afternoon_time_out', '2026-02-25 09:06:17'),
+(2281, 59, 763, 'uploads/faces/face_59_1772010427.png', 'afternoon_time_out', '2026-02-25 09:07:07'),
+(2282, 67, 768, 'uploads/faces/face_67_1772010442.png', 'afternoon_time_out', '2026-02-25 09:07:22'),
+(2283, 65, 758, 'uploads/faces/face_65_1772010592.png', 'afternoon_time_out', '2026-02-25 09:09:52'),
+(2284, 61, 766, 'uploads/faces/face_61_1772011358.png', 'afternoon_time_out', '2026-02-25 09:22:38'),
+(2285, 60, 764, 'uploads/faces/face_60_1772011390.png', 'afternoon_time_out', '2026-02-25 09:23:10'),
+(2286, 58, 765, 'uploads/faces/face_58_1772012712.png', 'afternoon_time_out', '2026-02-25 09:45:12'),
+(2287, 56, 767, 'uploads/faces/face_56_1772012757.png', 'afternoon_time_out', '2026-02-25 09:45:57'),
+(2288, 62, 771, 'uploads/faces/face_62_1772149439.png', 'morning_time_in', '2026-02-26 23:43:59'),
+(2289, 63, 772, 'uploads/faces/face_63_1772149456.png', 'morning_time_in', '2026-02-26 23:44:16'),
+(2290, 64, 773, 'uploads/faces/face_64_1772149476.png', 'morning_time_in', '2026-02-26 23:44:36'),
+(2291, 67, 774, 'uploads/faces/face_67_1772149961.png', 'morning_time_in', '2026-02-26 23:52:41'),
+(2292, 57, 775, 'uploads/faces/face_57_1772150207.png', 'morning_time_in', '2026-02-26 23:56:47'),
+(2293, 66, 776, 'uploads/faces/face_66_1772150242.png', 'morning_time_in', '2026-02-26 23:57:22'),
+(2294, 59, 777, 'uploads/faces/face_59_1772150267.png', 'morning_time_in', '2026-02-26 23:57:47'),
+(2295, 61, 778, 'uploads/faces/face_61_1772150566.png', 'morning_time_in', '2026-02-27 00:02:46'),
+(2296, 65, 779, 'uploads/faces/face_65_1772150783.png', 'morning_time_in', '2026-02-27 00:06:23'),
+(2297, 56, 781, 'uploads/faces/face_56_1772151229.png', 'morning_time_in', '2026-02-27 00:13:49'),
+(2298, 59, 777, 'uploads/faces/face_59_1772164847.png', 'afternoon_time_out', '2026-02-27 04:00:47'),
+(2299, 62, 771, 'uploads/faces/face_62_1772164867.png', 'afternoon_time_out', '2026-02-27 04:01:07'),
+(2300, 63, 772, 'uploads/faces/face_63_1772164883.png', 'afternoon_time_out', '2026-02-27 04:01:23'),
+(2301, 61, 778, 'uploads/faces/face_61_1772164909.png', 'afternoon_time_out', '2026-02-27 04:01:49'),
+(2302, 66, 776, 'uploads/faces/face_66_1772164926.png', 'afternoon_time_out', '2026-02-27 04:02:06'),
+(2303, 67, 774, 'uploads/faces/face_67_1772164942.png', 'afternoon_time_out', '2026-02-27 04:02:22'),
+(2304, 52, 769, 'uploads/faces/face_52_1772164994.png', 'afternoon_time_out', '2026-02-27 04:03:14'),
+(2305, 53, 770, 'uploads/faces/face_53_1772165010.png', 'afternoon_time_out', '2026-02-27 04:03:30'),
+(2306, 57, 775, 'uploads/faces/face_57_1772165025.png', 'afternoon_time_out', '2026-02-27 04:03:45'),
+(2307, 65, 779, 'uploads/faces/face_65_1772165038.png', 'afternoon_time_out', '2026-02-27 04:03:58'),
+(2308, 56, 781, 'uploads/faces/face_56_1772165055.png', 'afternoon_time_out', '2026-02-27 04:04:15'),
+(2309, 60, 780, 'uploads/faces/face_60_1772165100.png', 'afternoon_time_out', '2026-02-27 04:05:00'),
+(2310, 61, 778, 'uploads/faces/face_61_1772166819.png', 'afternoon_time_in', '2026-02-27 04:33:39'),
+(2311, 63, 772, 'uploads/faces/face_63_1772166834.png', 'afternoon_time_in', '2026-02-27 04:33:54'),
+(2312, 62, 771, 'uploads/faces/face_62_1772166861.png', 'afternoon_time_in', '2026-02-27 04:34:21'),
+(2313, 57, 775, 'uploads/faces/face_57_1772166892.png', 'afternoon_time_in', '2026-02-27 04:34:52'),
+(2314, 52, 769, 'uploads/faces/face_52_1772166919.png', 'afternoon_time_in', '2026-02-27 04:35:19'),
+(2315, 56, 781, 'uploads/faces/face_56_1772166982.png', 'afternoon_time_in', '2026-02-27 04:36:22'),
+(2316, 65, 779, 'uploads/faces/face_65_1772167436.png', 'afternoon_time_in', '2026-02-27 04:43:56'),
+(2317, 58, 782, 'uploads/faces/face_58_1772167486.png', 'afternoon_time_in', '2026-02-27 04:44:46'),
+(2318, 59, 777, 'uploads/faces/face_59_1772168100.png', 'afternoon_time_in', '2026-02-27 04:55:00'),
+(2319, 67, 774, 'uploads/faces/face_67_1772168166.png', 'afternoon_time_in', '2026-02-27 04:56:06'),
+(2320, 66, 776, 'uploads/faces/face_66_1772168245.png', 'afternoon_time_in', '2026-02-27 04:57:25'),
+(2321, 62, 771, 'uploads/faces/face_62_1772182814.png', 'afternoon_time_out', '2026-02-27 09:00:14'),
+(2322, 63, 772, 'uploads/faces/face_63_1772182829.png', 'afternoon_time_out', '2026-02-27 09:00:29'),
+(2323, 67, 774, 'uploads/faces/face_67_1772182869.png', 'afternoon_time_out', '2026-02-27 09:01:09'),
+(2324, 64, 773, 'uploads/faces/face_64_1772182908.png', 'afternoon_time_out', '2026-02-27 09:01:48'),
+(2325, 66, 776, 'uploads/faces/face_66_1772182937.png', 'afternoon_time_out', '2026-02-27 09:02:17'),
+(2326, 59, 777, 'uploads/faces/face_59_1772182975.png', 'afternoon_time_out', '2026-02-27 09:02:55'),
+(2327, 53, 770, 'uploads/faces/face_53_1772183496.png', 'afternoon_time_out', '2026-02-27 09:11:36'),
+(2328, 53, 770, 'uploads/faces/face_53_1772183511.png', 'afternoon_time_out', '2026-02-27 09:11:51'),
+(2329, 52, 769, 'uploads/faces/face_52_1772183527.png', 'afternoon_time_out', '2026-02-27 09:12:07'),
+(2330, 65, 779, 'uploads/faces/face_65_1772183553.png', 'afternoon_time_out', '2026-02-27 09:12:33'),
+(2331, 61, 778, 'uploads/faces/face_61_1772183617.png', 'afternoon_time_out', '2026-02-27 09:13:37'),
+(2332, 58, 782, 'uploads/faces/face_58_1772183638.png', 'afternoon_time_out', '2026-02-27 09:13:58'),
+(2333, 60, 780, 'uploads/faces/face_60_1772183698.png', 'afternoon_time_out', '2026-02-27 09:14:58'),
+(2334, 56, 781, 'uploads/faces/face_56_1772183736.png', 'afternoon_time_out', '2026-02-27 09:15:36'),
+(2335, 57, 775, 'uploads/faces/face_57_1772184157.png', 'afternoon_time_out', '2026-02-27 09:22:37'),
+(2336, 65, 785, 'uploads/faces/face_65_1772408489.png', 'morning_time_in', '2026-03-01 23:41:29'),
+(2337, 64, 786, 'uploads/faces/face_64_1772408693.png', 'morning_time_in', '2026-03-01 23:44:53'),
+(2338, 57, 787, 'uploads/faces/face_57_1772408980.png', 'morning_time_in', '2026-03-01 23:49:40'),
+(2339, 61, 788, 'uploads/faces/face_61_1772409369.png', 'morning_time_in', '2026-03-01 23:56:10'),
+(2340, 66, 789, 'uploads/faces/face_66_1772409628.png', 'morning_time_in', '2026-03-02 00:00:28'),
+(2341, 67, 790, 'uploads/faces/face_67_1772410873.png', 'morning_time_in', '2026-03-02 00:21:13'),
+(2342, 60, 791, 'uploads/faces/face_60_1772411165.png', 'morning_time_in', '2026-03-02 00:26:05'),
+(2343, 56, 792, 'uploads/faces/face_56_1772413029.png', 'morning_time_in', '2026-03-02 00:57:09'),
+(2344, 58, 793, 'uploads/faces/face_58_1772413043.png', 'morning_time_in', '2026-03-02 00:57:23'),
+(2345, 59, 794, 'uploads/faces/face_59_1772413138.png', 'morning_time_in', '2026-03-02 00:58:58'),
+(2346, 62, 783, 'uploads/faces/face_62_1772424087.png', 'afternoon_time_out', '2026-03-02 04:01:27'),
+(2347, 63, 784, 'uploads/faces/face_63_1772424109.png', 'afternoon_time_out', '2026-03-02 04:01:49'),
+(2348, 65, 785, 'uploads/faces/face_65_1772424132.png', 'afternoon_time_out', '2026-03-02 04:02:12'),
+(2349, 66, 789, 'uploads/faces/face_66_1772424149.png', 'afternoon_time_out', '2026-03-02 04:02:29'),
+(2350, 61, 788, 'uploads/faces/face_61_1772424167.png', 'afternoon_time_out', '2026-03-02 04:02:47'),
+(2351, 67, 790, 'uploads/faces/face_67_1772424187.png', 'afternoon_time_out', '2026-03-02 04:03:07'),
+(2352, 60, 791, 'uploads/faces/face_60_1772424208.png', 'afternoon_time_out', '2026-03-02 04:03:28'),
+(2353, 59, 794, 'uploads/faces/face_59_1772424288.png', 'afternoon_time_out', '2026-03-02 04:04:48'),
+(2354, 57, 787, 'uploads/faces/face_57_1772424355.png', 'afternoon_time_out', '2026-03-02 04:05:55'),
+(2355, 58, 793, 'uploads/faces/face_58_1772424381.png', 'afternoon_time_out', '2026-03-02 04:06:21'),
+(2356, 56, 792, 'uploads/faces/face_56_1772424435.png', 'afternoon_time_out', '2026-03-02 04:07:15'),
+(2357, 61, 788, 'uploads/faces/face_61_1772425215.png', 'afternoon_time_in', '2026-03-02 04:20:15'),
+(2358, 63, 784, 'uploads/faces/face_63_1772425231.png', 'afternoon_time_in', '2026-03-02 04:20:31'),
+(2359, 62, 783, 'uploads/faces/face_62_1772425264.png', 'afternoon_time_in', '2026-03-02 04:21:04'),
+(2360, 56, 792, 'uploads/faces/face_56_1772426144.png', 'afternoon_time_in', '2026-03-02 04:35:44'),
+(2361, 57, 787, 'uploads/faces/face_57_1772426167.png', 'afternoon_time_in', '2026-03-02 04:36:07'),
+(2362, 58, 793, 'uploads/faces/face_58_1772426196.png', 'afternoon_time_in', '2026-03-02 04:36:36'),
+(2363, 65, 785, 'uploads/faces/face_65_1772426605.png', 'afternoon_time_in', '2026-03-02 04:43:25'),
+(2364, 59, 794, 'uploads/faces/face_59_1772427399.png', 'afternoon_time_in', '2026-03-02 04:56:39'),
+(2365, 67, 790, 'uploads/faces/face_67_1772427477.png', 'afternoon_time_in', '2026-03-02 04:57:57'),
+(2366, 66, 789, 'uploads/faces/face_66_1772427656.png', 'afternoon_time_in', '2026-03-02 05:00:56'),
+(2367, 60, 791, 'uploads/faces/face_60_1772430323.png', 'afternoon_time_in', '2026-03-02 05:45:23'),
+(2368, 62, 783, 'uploads/faces/face_62_1772442074.png', 'afternoon_time_out', '2026-03-02 09:01:14'),
+(2369, 63, 784, 'uploads/faces/face_63_1772442095.png', 'afternoon_time_out', '2026-03-02 09:01:35'),
+(2370, 66, 789, 'uploads/faces/face_66_1772442132.png', 'afternoon_time_out', '2026-03-02 09:02:12'),
+(2371, 64, 786, 'uploads/faces/face_64_1772442163.png', 'afternoon_time_out', '2026-03-02 09:02:43'),
+(2372, 59, 794, 'uploads/faces/face_59_1772442258.png', 'afternoon_time_out', '2026-03-02 09:04:18'),
+(2373, 65, 785, 'uploads/faces/face_65_1772442281.png', 'afternoon_time_out', '2026-03-02 09:04:41'),
+(2374, 67, 790, 'uploads/faces/face_67_1772442321.png', 'afternoon_time_out', '2026-03-02 09:05:21'),
+(2375, 61, 788, 'uploads/faces/face_61_1772442652.png', 'afternoon_time_out', '2026-03-02 09:10:52'),
+(2376, 60, 791, 'uploads/faces/face_60_1772442668.png', 'afternoon_time_out', '2026-03-02 09:11:08'),
+(2377, 57, 787, 'uploads/faces/face_57_1772443274.png', 'afternoon_time_out', '2026-03-02 09:21:14'),
+(2378, 58, 793, 'uploads/faces/face_58_1772443295.png', 'afternoon_time_out', '2026-03-02 09:21:35'),
+(2379, 56, 792, 'uploads/faces/face_56_1772443873.png', 'afternoon_time_out', '2026-03-02 09:31:13'),
+(2380, 60, 795, 'uploads/faces/face_60_1772494536.png', 'morning_time_in', '2026-03-02 23:35:37'),
+(2381, 52, 796, 'uploads/faces/face_52_1772494712.png', 'morning_time_in', '2026-03-02 23:38:32'),
+(2382, 70, 797, 'uploads/faces/face_70_1772495088.png', 'morning_time_in', '2026-03-02 23:44:48'),
+(2383, 69, 798, 'uploads/faces/face_69_1772495142.png', 'morning_time_in', '2026-03-02 23:45:42'),
+(2384, 57, 799, 'uploads/faces/face_57_1772495277.png', 'morning_time_in', '2026-03-02 23:47:57'),
+(2385, 67, 800, 'uploads/faces/face_67_1772495611.png', 'morning_time_in', '2026-03-02 23:53:31'),
+(2386, 65, 801, 'uploads/faces/face_65_1772495832.png', 'morning_time_in', '2026-03-02 23:57:12'),
+(2387, 71, 802, 'uploads/faces/face_71_1772495854.png', 'morning_time_in', '2026-03-02 23:57:34'),
+(2388, 62, 804, 'uploads/faces/face_62_1772496255.png', 'morning_time_in', '2026-03-03 00:04:16'),
+(2389, 63, 805, 'uploads/faces/face_63_1772496274.png', 'morning_time_in', '2026-03-03 00:04:34'),
+(2390, 61, 806, 'uploads/faces/face_61_1772496296.png', 'morning_time_in', '2026-03-03 00:04:56'),
+(2391, 58, 807, 'uploads/faces/face_58_1772496321.png', 'morning_time_in', '2026-03-03 00:05:21'),
+(2392, 56, 808, 'uploads/faces/face_56_1772496406.png', 'morning_time_in', '2026-03-03 00:06:46'),
+(2393, 66, 809, 'uploads/faces/face_66_1772496752.png', 'morning_time_in', '2026-03-03 00:12:33'),
+(2394, 64, 810, 'uploads/faces/face_64_1772496769.png', 'morning_time_in', '2026-03-03 00:12:49'),
+(2395, 68, 811, 'uploads/faces/face_68_1772497544.png', 'morning_time_in', '2026-03-03 00:25:44'),
+(2396, 62, 804, 'uploads/faces/face_62_1772510467.png', 'afternoon_time_out', '2026-03-03 04:01:07'),
+(2397, 63, 805, 'uploads/faces/face_63_1772510485.png', 'afternoon_time_out', '2026-03-03 04:01:25'),
+(2398, 66, 809, 'uploads/faces/face_66_1772510503.png', 'afternoon_time_out', '2026-03-03 04:01:43'),
+(2399, 71, 802, 'uploads/faces/face_71_1772510525.png', 'afternoon_time_out', '2026-03-03 04:02:05'),
+(2400, 69, 798, 'uploads/faces/face_69_1772510539.png', 'afternoon_time_out', '2026-03-03 04:02:19'),
+(2401, 68, 811, 'uploads/faces/face_68_1772510561.png', 'afternoon_time_out', '2026-03-03 04:02:41'),
+(2402, 67, 800, 'uploads/faces/face_67_1772510581.png', 'afternoon_time_out', '2026-03-03 04:03:02'),
+(2403, 52, 796, 'uploads/faces/face_52_1772510598.png', 'afternoon_time_out', '2026-03-03 04:03:18'),
+(2404, 58, 807, 'uploads/faces/face_58_1772510619.png', 'afternoon_time_out', '2026-03-03 04:03:39'),
+(2405, 53, 803, 'uploads/faces/face_53_1772510633.png', 'afternoon_time_out', '2026-03-03 04:03:53'),
+(2406, 56, 808, 'uploads/faces/face_56_1772510652.png', 'afternoon_time_out', '2026-03-03 04:04:12'),
+(2407, 57, 799, 'uploads/faces/face_57_1772510661.png', 'afternoon_time_out', '2026-03-03 04:04:21'),
+(2408, 60, 795, 'uploads/faces/face_60_1772510676.png', 'afternoon_time_out', '2026-03-03 04:04:36'),
+(2409, 61, 806, 'uploads/faces/face_61_1772510690.png', 'afternoon_time_out', '2026-03-03 04:04:50'),
+(2410, 62, 804, 'uploads/faces/face_62_1772511541.png', 'afternoon_time_in', '2026-03-03 04:19:01'),
+(2411, 63, 805, 'uploads/faces/face_63_1772511558.png', 'afternoon_time_in', '2026-03-03 04:19:18'),
+(2412, 65, 801, 'uploads/faces/face_65_1772512324.png', 'afternoon_time_in', '2026-03-03 04:32:04'),
+(2413, 56, 808, 'uploads/faces/face_56_1772512428.png', 'afternoon_time_in', '2026-03-03 04:33:48'),
+(2414, 57, 799, 'uploads/faces/face_57_1772512440.png', 'afternoon_time_in', '2026-03-03 04:34:00'),
+(2415, 58, 807, 'uploads/faces/face_58_1772512460.png', 'afternoon_time_in', '2026-03-03 04:34:20'),
+(2416, 52, 796, 'uploads/faces/face_52_1772512497.png', 'afternoon_time_in', '2026-03-03 04:34:57'),
+(2417, 53, 803, 'uploads/faces/face_53_1772512517.png', 'afternoon_time_in', '2026-03-03 04:35:17'),
+(2418, 71, 802, 'uploads/faces/face_71_1772512828.png', 'afternoon_time_in', '2026-03-03 04:40:28'),
+(2419, 60, 795, 'uploads/faces/face_60_1772513243.png', 'afternoon_time_in', '2026-03-03 04:47:23'),
+(2420, 61, 806, 'uploads/faces/face_61_1772513264.png', 'afternoon_time_in', '2026-03-03 04:47:44');
+INSERT INTO `timesheet_photos` (`id`, `intern_id`, `record_id`, `photo_path`, `photo_type`, `created_at`) VALUES
+(2421, 69, 798, 'uploads/faces/face_69_1772513292.png', 'afternoon_time_in', '2026-03-03 04:48:12'),
+(2422, 66, 809, 'uploads/faces/face_66_1772513531.png', 'afternoon_time_in', '2026-03-03 04:52:11'),
+(2423, 67, 800, 'uploads/faces/face_67_1772513880.png', 'afternoon_time_in', '2026-03-03 04:58:00'),
+(2424, 70, 797, 'uploads/faces/face_70_1772514058.png', 'afternoon_time_out', '2026-03-03 05:00:58'),
+(2425, 70, 797, 'uploads/faces/face_70_1772514069.png', 'afternoon_time_in', '2026-03-03 05:01:09'),
+(2426, 56, 808, 'uploads/faces/face_56_1772527096.png', 'afternoon_time_out', '2026-03-03 08:38:16'),
+(2427, 68, 811, 'uploads/faces/face_68_1772528393.png', 'afternoon_time_in', '2026-03-03 08:59:53'),
+(2428, 70, 797, 'uploads/faces/face_70_1772528428.png', 'afternoon_time_out', '2026-03-03 09:00:28'),
+(2429, 71, 802, 'uploads/faces/face_71_1772528449.png', 'afternoon_time_out', '2026-03-03 09:00:49'),
+(2430, 53, 803, 'uploads/faces/face_53_1772528469.png', 'afternoon_time_out', '2026-03-03 09:01:09'),
+(2431, 69, 798, 'uploads/faces/face_69_1772528490.png', 'afternoon_time_out', '2026-03-03 09:01:30'),
+(2432, 52, 796, 'uploads/faces/face_52_1772528547.png', 'afternoon_time_out', '2026-03-03 09:02:27'),
+(2433, 67, 800, 'uploads/faces/face_67_1772528577.png', 'afternoon_time_out', '2026-03-03 09:02:57'),
+(2434, 57, 799, 'uploads/faces/face_57_1772528612.png', 'afternoon_time_in', '2026-03-03 09:03:32'),
+(2435, 57, 799, 'uploads/faces/face_57_1772528637.png', 'afternoon_time_out', '2026-03-03 09:03:57'),
+(2436, 65, 801, 'uploads/faces/face_65_1772528679.png', 'afternoon_time_out', '2026-03-03 09:04:39'),
+(2437, 58, 807, 'uploads/faces/face_58_1772528735.png', 'afternoon_time_out', '2026-03-03 09:05:35'),
+(2438, 61, 806, 'uploads/faces/face_61_1772528789.png', 'afternoon_time_out', '2026-03-03 09:06:29'),
+(2439, 60, 795, 'uploads/faces/face_60_1772528824.png', 'afternoon_time_out', '2026-03-03 09:07:04'),
+(2440, 66, 809, 'uploads/faces/face_66_1772529171.png', 'afternoon_time_out', '2026-03-03 09:12:51'),
+(2441, 64, 810, 'uploads/faces/face_64_1772529188.png', 'afternoon_time_out', '2026-03-03 09:13:08'),
+(2442, 68, 811, 'uploads/faces/face_68_1772529919.png', 'afternoon_time_out', '2026-03-03 09:25:19'),
+(2443, 62, 804, 'uploads/faces/face_62_1772529947.png', 'afternoon_time_out', '2026-03-03 09:25:47'),
+(2444, 63, 805, 'uploads/faces/face_63_1772529965.png', 'afternoon_time_out', '2026-03-03 09:26:05'),
+(2445, 57, 812, 'uploads/faces/face_57_1772581746.png', 'morning_time_in', '2026-03-03 23:49:06'),
+(2446, 62, 813, 'uploads/faces/face_62_1772581997.png', 'morning_time_in', '2026-03-03 23:53:17'),
+(2447, 63, 814, 'uploads/faces/face_63_1772582016.png', 'morning_time_in', '2026-03-03 23:53:36'),
+(2448, 67, 815, 'uploads/faces/face_67_1772582191.png', 'morning_time_in', '2026-03-03 23:56:31'),
+(2449, 65, 816, 'uploads/faces/face_65_1772582384.png', 'morning_time_in', '2026-03-03 23:59:44'),
+(2450, 64, 817, 'uploads/faces/face_64_1772582849.png', 'morning_time_in', '2026-03-04 00:07:29'),
+(2451, 66, 818, 'uploads/faces/face_66_1772582866.png', 'morning_time_in', '2026-03-04 00:07:46'),
+(2452, 61, 819, 'uploads/faces/face_61_1772582963.png', 'morning_time_in', '2026-03-04 00:09:23'),
+(2453, 58, 820, 'uploads/faces/face_58_1772583183.png', 'morning_time_in', '2026-03-04 00:13:03'),
+(2454, 60, 821, 'uploads/faces/face_60_1772583203.png', 'morning_time_in', '2026-03-04 00:13:23'),
+(2455, 75, 822, 'uploads/faces/face_75_1772585934.png', 'morning_time_in', '2026-03-04 00:58:54'),
+(2456, 65, 816, 'uploads/faces/face_65_1772596860.png', 'afternoon_time_out', '2026-03-04 04:01:00'),
+(2457, 67, 815, 'uploads/faces/face_67_1772596879.png', 'afternoon_time_out', '2026-03-04 04:01:19'),
+(2458, 62, 813, 'uploads/faces/face_62_1772596896.png', 'afternoon_time_out', '2026-03-04 04:01:36'),
+(2459, 63, 814, 'uploads/faces/face_63_1772596918.png', 'afternoon_time_out', '2026-03-04 04:01:58'),
+(2460, 66, 818, 'uploads/faces/face_66_1772596954.png', 'afternoon_time_out', '2026-03-04 04:02:34'),
+(2461, 73, 823, 'uploads/faces/face_73_1772597042.png', 'afternoon_time_in', '2026-03-04 04:04:02'),
+(2462, 73, 823, 'uploads/faces/face_73_1772597055.png', 'afternoon_time_out', '2026-03-04 04:04:15'),
+(2463, 73, 823, 'uploads/faces/face_73_1772597063.png', 'afternoon_time_out', '2026-03-04 04:04:23'),
+(2464, 75, 822, 'uploads/faces/face_75_1772597175.png', 'afternoon_time_out', '2026-03-04 04:06:15'),
+(2465, 75, 822, 'uploads/faces/face_75_1772597189.png', 'afternoon_time_out', '2026-03-04 04:06:29'),
+(2466, 57, 812, 'uploads/faces/face_57_1772597454.png', 'afternoon_time_out', '2026-03-04 04:10:54'),
+(2467, 58, 820, 'uploads/faces/face_58_1772597493.png', 'afternoon_time_out', '2026-03-04 04:11:33'),
+(2468, 62, 813, 'uploads/faces/face_62_1772598390.png', 'afternoon_time_in', '2026-03-04 04:26:30'),
+(2469, 63, 814, 'uploads/faces/face_63_1772598410.png', 'afternoon_time_in', '2026-03-04 04:26:50'),
+(2470, 75, 822, 'uploads/faces/face_75_1772598863.png', 'afternoon_time_in', '2026-03-04 04:34:23'),
+(2471, 72, 824, 'uploads/faces/face_72_1772598894.png', 'afternoon_time_in', '2026-03-04 04:34:54'),
+(2472, 73, 823, 'uploads/faces/face_73_1772598918.png', 'afternoon_time_in', '2026-03-04 04:35:18'),
+(2473, 74, 825, 'uploads/faces/face_74_1772598999.png', 'afternoon_time_in', '2026-03-04 04:36:39'),
+(2474, 57, 812, 'uploads/faces/face_57_1772599368.png', 'afternoon_time_in', '2026-03-04 04:42:48'),
+(2475, 58, 820, 'uploads/faces/face_58_1772599400.png', 'afternoon_time_in', '2026-03-04 04:43:20'),
+(2476, 65, 816, 'uploads/faces/face_65_1772599663.png', 'afternoon_time_in', '2026-03-04 04:47:43'),
+(2477, 67, 815, 'uploads/faces/face_67_1772600401.png', 'afternoon_time_in', '2026-03-04 05:00:01'),
+(2478, 66, 818, 'uploads/faces/face_66_1772600452.png', 'afternoon_time_in', '2026-03-04 05:00:52'),
+(2479, 62, 813, 'uploads/faces/face_62_1772614938.png', 'afternoon_time_out', '2026-03-04 09:02:18'),
+(2480, 63, 814, 'uploads/faces/face_63_1772614960.png', 'afternoon_time_out', '2026-03-04 09:02:40'),
+(2481, 65, 816, 'uploads/faces/face_65_1772614977.png', 'afternoon_time_out', '2026-03-04 09:02:57'),
+(2482, 67, 815, 'uploads/faces/face_67_1772615006.png', 'afternoon_time_out', '2026-03-04 09:03:26'),
+(2483, 64, 817, 'uploads/faces/face_64_1772615397.png', 'afternoon_time_out', '2026-03-04 09:09:57'),
+(2484, 66, 818, 'uploads/faces/face_66_1772615429.png', 'afternoon_time_out', '2026-03-04 09:10:29'),
+(2485, 60, 821, 'uploads/faces/face_60_1772615702.png', 'afternoon_time_out', '2026-03-04 09:15:02'),
+(2486, 60, 821, 'uploads/faces/face_60_1772615720.png', 'afternoon_time_out', '2026-03-04 09:15:20'),
+(2487, 61, 819, 'uploads/faces/face_61_1772615743.png', 'afternoon_time_out', '2026-03-04 09:15:43'),
+(2488, 57, 812, 'uploads/faces/face_57_1772615861.png', 'afternoon_time_out', '2026-03-04 09:17:41'),
+(2489, 58, 820, 'uploads/faces/face_58_1772615899.png', 'afternoon_time_out', '2026-03-04 09:18:19'),
+(2490, 72, 824, 'uploads/faces/face_72_1772616708.png', 'afternoon_time_out', '2026-03-04 09:31:48'),
+(2491, 74, 825, 'uploads/faces/face_74_1772616751.png', 'afternoon_time_out', '2026-03-04 09:32:31'),
+(2492, 75, 822, 'uploads/faces/face_75_1772616779.png', 'afternoon_time_out', '2026-03-04 09:32:59'),
+(2493, 62, 826, 'uploads/faces/face_62_1772667516.png', 'morning_time_in', '2026-03-04 23:38:36'),
+(2494, 63, 827, 'uploads/faces/face_63_1772667550.png', 'morning_time_in', '2026-03-04 23:39:10'),
+(2495, 69, 828, 'uploads/faces/face_69_1772668127.png', 'morning_time_in', '2026-03-04 23:48:47'),
+(2496, 57, 829, 'uploads/faces/face_57_1772668297.png', 'morning_time_in', '2026-03-04 23:51:37'),
+(2497, 64, 830, 'uploads/faces/face_64_1772668628.png', 'morning_time_in', '2026-03-04 23:57:08'),
+(2498, 58, 831, 'uploads/faces/face_58_1772668661.png', 'morning_time_in', '2026-03-04 23:57:41'),
+(2499, 70, 832, 'uploads/faces/face_70_1772669048.png', 'morning_time_in', '2026-03-05 00:04:08'),
+(2500, 71, 833, 'uploads/faces/face_71_1772669082.png', 'morning_time_in', '2026-03-05 00:04:42'),
+(2501, 52, 834, 'uploads/faces/face_52_1772669292.png', 'morning_time_in', '2026-03-05 00:08:12'),
+(2502, 68, 835, 'uploads/faces/face_68_1772669577.png', 'morning_time_in', '2026-03-05 00:12:57'),
+(2503, 59, 836, 'uploads/faces/face_59_1772669596.png', 'morning_time_in', '2026-03-05 00:13:16'),
+(2504, 72, 837, 'uploads/faces/face_72_1772669773.png', 'morning_time_in', '2026-03-05 00:16:13'),
+(2505, 66, 838, 'uploads/faces/face_66_1772669787.png', 'morning_time_in', '2026-03-05 00:16:27'),
+(2506, 60, 839, 'uploads/faces/face_60_1772669898.png', 'morning_time_in', '2026-03-05 00:18:18'),
+(2507, 60, 839, 'uploads/faces/face_60_1772670039.png', 'morning_time_in', '2026-03-05 00:20:39'),
+(2508, 75, 840, 'uploads/faces/face_75_1772670059.png', 'morning_time_in', '2026-03-05 00:20:59'),
+(2509, 75, 840, 'uploads/faces/face_75_1772670086.png', 'morning_time_in', '2026-03-05 00:21:26'),
+(2510, 65, 842, 'uploads/faces/face_65_1772670164.png', 'morning_time_in', '2026-03-05 00:22:44'),
+(2511, 61, 843, 'uploads/faces/face_61_1772670272.png', 'morning_time_in', '2026-03-05 00:24:32'),
+(2512, 67, 844, 'uploads/faces/face_67_1772670972.png', 'morning_time_in', '2026-03-05 00:36:12'),
+(2513, 73, 845, 'uploads/faces/face_73_1772675971.png', 'morning_time_in', '2026-03-05 01:59:31'),
+(2514, 57, 829, 'uploads/faces/face_57_1772683228.png', 'afternoon_time_out', '2026-03-05 04:00:28'),
+(2515, 52, 834, 'uploads/faces/face_52_1772683243.png', 'afternoon_time_out', '2026-03-05 04:00:43'),
+(2516, 61, 843, 'uploads/faces/face_61_1772683307.png', 'afternoon_time_out', '2026-03-05 04:01:47'),
+(2517, 60, 839, 'uploads/faces/face_60_1772683322.png', 'afternoon_time_out', '2026-03-05 04:02:02'),
+(2518, 58, 831, 'uploads/faces/face_58_1772683350.png', 'afternoon_time_out', '2026-03-05 04:02:30'),
+(2519, 53, 841, 'uploads/faces/face_53_1772683366.png', 'afternoon_time_out', '2026-03-05 04:02:46'),
+(2520, 66, 838, 'uploads/faces/face_66_1772683379.png', 'afternoon_time_out', '2026-03-05 04:02:59'),
+(2521, 69, 828, 'uploads/faces/face_69_1772683398.png', 'afternoon_time_out', '2026-03-05 04:03:18'),
+(2522, 68, 835, 'uploads/faces/face_68_1772683411.png', 'afternoon_time_out', '2026-03-05 04:03:31'),
+(2523, 71, 833, 'uploads/faces/face_71_1772683430.png', 'afternoon_time_out', '2026-03-05 04:03:50'),
+(2524, 59, 836, 'uploads/faces/face_59_1772683441.png', 'afternoon_time_out', '2026-03-05 04:04:01'),
+(2525, 72, 837, 'uploads/faces/face_72_1772683468.png', 'afternoon_time_out', '2026-03-05 04:04:28'),
+(2526, 63, 827, 'uploads/faces/face_63_1772683502.png', 'afternoon_time_out', '2026-03-05 04:05:02'),
+(2527, 62, 826, 'uploads/faces/face_62_1772683518.png', 'afternoon_time_out', '2026-03-05 04:05:18'),
+(2528, 73, 845, 'uploads/faces/face_73_1772683610.png', 'afternoon_time_out', '2026-03-05 04:06:50'),
+(2529, 75, 840, 'uploads/faces/face_75_1772683651.png', 'afternoon_time_out', '2026-03-05 04:07:31'),
+(2530, 74, 846, 'uploads/faces/face_74_1772683746.png', 'afternoon_time_in', '2026-03-05 04:09:06'),
+(2531, 64, 830, 'uploads/faces/face_64_1772684005.png', 'afternoon_time_out', '2026-03-05 04:13:25'),
+(2532, 65, 842, 'uploads/faces/face_65_1772684023.png', 'afternoon_time_out', '2026-03-05 04:13:43'),
+(2533, 57, 829, 'uploads/faces/face_57_1772684734.png', 'afternoon_time_in', '2026-03-05 04:25:34'),
+(2534, 52, 834, 'uploads/faces/face_52_1772685295.png', 'afternoon_time_in', '2026-03-05 04:34:55'),
+(2535, 73, 845, 'uploads/faces/face_73_1772685575.png', 'afternoon_time_in', '2026-03-05 04:39:35'),
+(2536, 75, 840, 'uploads/faces/face_75_1772685597.png', 'afternoon_time_in', '2026-03-05 04:39:57'),
+(2537, 72, 837, 'uploads/faces/face_72_1772685623.png', 'afternoon_time_in', '2026-03-05 04:40:23'),
+(2538, 64, 830, 'uploads/faces/face_64_1772685866.png', 'afternoon_time_in', '2026-03-05 04:44:26'),
+(2539, 65, 842, 'uploads/faces/face_65_1772685976.png', 'afternoon_time_in', '2026-03-05 04:46:16'),
+(2540, 59, 836, 'uploads/faces/face_59_1772686200.png', 'afternoon_time_in', '2026-03-05 04:50:00'),
+(2541, 69, 828, 'uploads/faces/face_69_1772686303.png', 'afternoon_time_in', '2026-03-05 04:51:43'),
+(2542, 71, 833, 'uploads/faces/face_71_1772686317.png', 'afternoon_time_in', '2026-03-05 04:51:57'),
+(2543, 68, 835, 'uploads/faces/face_68_1772686330.png', 'afternoon_time_in', '2026-03-05 04:52:10'),
+(2544, 67, 844, 'uploads/faces/face_67_1772686645.png', 'afternoon_time_out', '2026-03-05 04:57:25'),
+(2545, 67, 844, 'uploads/faces/face_67_1772686658.png', 'afternoon_time_in', '2026-03-05 04:57:38'),
+(2546, 66, 838, 'uploads/faces/face_66_1772686758.png', 'afternoon_time_in', '2026-03-05 04:59:18'),
+(2547, 61, 843, 'uploads/faces/face_61_1772686799.png', 'afternoon_time_in', '2026-03-05 04:59:59'),
+(2548, 60, 839, 'uploads/faces/face_60_1772686818.png', 'afternoon_time_in', '2026-03-05 05:00:18'),
+(2549, 68, 835, 'uploads/faces/face_68_1772696962.png', 'afternoon_time_out', '2026-03-05 07:49:22'),
+(2550, 69, 828, 'uploads/faces/face_69_1772696975.png', 'afternoon_time_out', '2026-03-05 07:49:35'),
+(2551, 62, 826, 'uploads/faces/face_62_1772701345.png', 'afternoon_time_in', '2026-03-05 09:02:25'),
+(2552, 63, 827, 'uploads/faces/face_63_1772701503.png', 'afternoon_time_in', '2026-03-05 09:05:03'),
+(2553, 70, 832, 'uploads/faces/face_70_1772701600.png', 'afternoon_time_out', '2026-03-05 09:06:40'),
+(2554, 71, 833, 'uploads/faces/face_71_1772701616.png', 'afternoon_time_out', '2026-03-05 09:06:56'),
+(2555, 67, 844, 'uploads/faces/face_67_1772701629.png', 'afternoon_time_out', '2026-03-05 09:07:09'),
+(2556, 53, 841, 'uploads/faces/face_53_1772701750.png', 'afternoon_time_out', '2026-03-05 09:09:10'),
+(2557, 59, 836, 'uploads/faces/face_59_1772701763.png', 'afternoon_time_out', '2026-03-05 09:09:23'),
+(2558, 57, 829, 'uploads/faces/face_57_1772701902.png', 'afternoon_time_out', '2026-03-05 09:11:42'),
+(2559, 64, 830, 'uploads/faces/face_64_1772702160.png', 'afternoon_time_out', '2026-03-05 09:16:00'),
+(2560, 66, 838, 'uploads/faces/face_66_1772702270.png', 'afternoon_time_out', '2026-03-05 09:17:50'),
+(2561, 65, 842, 'uploads/faces/face_65_1772702291.png', 'afternoon_time_in', '2026-03-05 09:18:11'),
+(2562, 65, 842, 'uploads/faces/face_65_1772702307.png', 'afternoon_time_out', '2026-03-05 09:18:27'),
+(2563, 58, 831, 'uploads/faces/face_58_1772702698.png', 'afternoon_time_out', '2026-03-05 09:24:58'),
+(2564, 61, 843, 'uploads/faces/face_61_1772702783.png', 'afternoon_time_out', '2026-03-05 09:26:23'),
+(2565, 60, 839, 'uploads/faces/face_60_1772702820.png', 'afternoon_time_out', '2026-03-05 09:27:00'),
+(2566, 72, 837, 'uploads/faces/face_72_1772702954.png', 'afternoon_time_out', '2026-03-05 09:29:14'),
+(2567, 75, 840, 'uploads/faces/face_75_1772702994.png', 'afternoon_time_out', '2026-03-05 09:29:54'),
+(2568, 75, 840, 'uploads/faces/face_75_1772703016.png', 'afternoon_time_out', '2026-03-05 09:30:16'),
+(2569, 73, 845, 'uploads/faces/face_73_1772703114.png', 'afternoon_time_out', '2026-03-05 09:31:54'),
+(2570, 73, 845, 'uploads/faces/face_73_1772703141.png', 'afternoon_time_out', '2026-03-05 09:32:21'),
+(2571, 74, 846, 'uploads/faces/face_74_1772703206.png', 'afternoon_time_out', '2026-03-05 09:33:26'),
+(2572, 63, 847, 'uploads/faces/face_63_1772753739.png', 'morning_time_in', '2026-03-05 23:35:39'),
+(2573, 62, 848, 'uploads/faces/face_62_1772753756.png', 'morning_time_in', '2026-03-05 23:35:56'),
+(2574, 57, 849, 'uploads/faces/face_57_1772754345.png', 'morning_time_in', '2026-03-05 23:45:45'),
+(2575, 71, 851, 'uploads/faces/face_71_1772754702.png', 'morning_time_in', '2026-03-05 23:51:42'),
+(2576, 70, 852, 'uploads/faces/face_70_1772754785.png', 'morning_time_in', '2026-03-05 23:53:05'),
+(2577, 66, 853, 'uploads/faces/face_66_1772754898.png', 'morning_time_in', '2026-03-05 23:54:58'),
+(2578, 58, 854, 'uploads/faces/face_58_1772755240.png', 'morning_time_in', '2026-03-06 00:00:40'),
+(2579, 65, 855, 'uploads/faces/face_65_1772755304.png', 'morning_time_in', '2026-03-06 00:01:44'),
+(2580, 53, 856, 'uploads/faces/face_53_1772755492.png', 'morning_time_in', '2026-03-06 00:04:52'),
+(2581, 64, 857, 'uploads/faces/face_64_1772755603.png', 'morning_time_in', '2026-03-06 00:06:43'),
+(2582, 60, 858, 'uploads/faces/face_60_1772755935.png', 'morning_time_in', '2026-03-06 00:12:15'),
+(2583, 68, 859, 'uploads/faces/face_68_1772756147.png', 'morning_time_in', '2026-03-06 00:15:47'),
+(2584, 67, 860, 'uploads/faces/face_67_1772756361.png', 'morning_time_in', '2026-03-06 00:19:21'),
+(2585, 67, 860, 'uploads/faces/face_67_1772756621.png', 'morning_time_in', '2026-03-06 00:23:41'),
+(2586, 61, 861, 'uploads/faces/face_61_1772756727.png', 'morning_time_in', '2026-03-06 00:25:27'),
+(2587, 59, 862, 'uploads/faces/face_59_1772757424.png', 'morning_time_in', '2026-03-06 00:37:04'),
+(2588, 71, 851, 'uploads/faces/face_71_1772769693.png', 'afternoon_time_out', '2026-03-06 04:01:33'),
+(2589, 62, 848, 'uploads/faces/face_62_1772769719.png', 'afternoon_time_out', '2026-03-06 04:01:59'),
+(2590, 63, 847, 'uploads/faces/face_63_1772769739.png', 'afternoon_time_out', '2026-03-06 04:02:19'),
+(2591, 60, 858, 'uploads/faces/face_60_1772769758.png', 'afternoon_time_out', '2026-03-06 04:02:38'),
+(2592, 66, 853, 'uploads/faces/face_66_1772769773.png', 'afternoon_time_out', '2026-03-06 04:02:53'),
+(2593, 61, 861, 'uploads/faces/face_61_1772769793.png', 'afternoon_time_out', '2026-03-06 04:03:13'),
+(2594, 67, 860, 'uploads/faces/face_67_1772769813.png', 'afternoon_time_out', '2026-03-06 04:03:33'),
+(2595, 65, 855, 'uploads/faces/face_65_1772769843.png', 'afternoon_time_out', '2026-03-06 04:04:03'),
+(2596, 59, 862, 'uploads/faces/face_59_1772769899.png', 'afternoon_time_out', '2026-03-06 04:04:59'),
+(2597, 53, 856, 'uploads/faces/face_53_1772769911.png', 'afternoon_time_out', '2026-03-06 04:05:11'),
+(2598, 58, 854, 'uploads/faces/face_58_1772769938.png', 'afternoon_time_out', '2026-03-06 04:05:38'),
+(2599, 52, 850, 'uploads/faces/face_52_1772769965.png', 'afternoon_time_out', '2026-03-06 04:06:05'),
+(2600, 57, 849, 'uploads/faces/face_57_1772769979.png', 'afternoon_time_out', '2026-03-06 04:06:19'),
+(2601, 68, 859, 'uploads/faces/face_68_1772770041.png', 'afternoon_time_out', '2026-03-06 04:07:21'),
+(2602, 63, 847, 'uploads/faces/face_63_1772770884.png', 'afternoon_time_in', '2026-03-06 04:21:24'),
+(2603, 62, 848, 'uploads/faces/face_62_1772770897.png', 'afternoon_time_in', '2026-03-06 04:21:37'),
+(2604, 61, 861, 'uploads/faces/face_61_1772771318.png', 'afternoon_time_in', '2026-03-06 04:28:38'),
+(2605, 53, 856, 'uploads/faces/face_53_1772771490.png', 'afternoon_time_in', '2026-03-06 04:31:30'),
+(2606, 57, 849, 'uploads/faces/face_57_1772771639.png', 'afternoon_time_in', '2026-03-06 04:33:59'),
+(2607, 58, 854, 'uploads/faces/face_58_1772771667.png', 'afternoon_time_in', '2026-03-06 04:34:27'),
+(2608, 65, 855, 'uploads/faces/face_65_1772771773.png', 'afternoon_time_in', '2026-03-06 04:36:13'),
+(2609, 67, 860, 'uploads/faces/face_67_1772772985.png', 'afternoon_time_in', '2026-03-06 04:56:25'),
+(2610, 59, 862, 'uploads/faces/face_59_1772773107.png', 'afternoon_time_in', '2026-03-06 04:58:27'),
+(2611, 66, 853, 'uploads/faces/face_66_1772773176.png', 'afternoon_time_in', '2026-03-06 04:59:36'),
+(2612, 68, 859, 'uploads/faces/face_68_1772773205.png', 'afternoon_time_in', '2026-03-06 05:00:05'),
+(2613, 71, 851, 'uploads/faces/face_71_1772773218.png', 'afternoon_time_in', '2026-03-06 05:00:18'),
+(2614, 70, 852, 'uploads/faces/face_70_1772773235.png', 'afternoon_time_in', '2026-03-06 05:00:35'),
+(2615, 66, 853, 'uploads/faces/face_66_1772787745.png', 'afternoon_time_out', '2026-03-06 09:02:25'),
+(2616, 65, 855, 'uploads/faces/face_65_1772787758.png', 'afternoon_time_out', '2026-03-06 09:02:38'),
+(2617, 67, 860, 'uploads/faces/face_67_1772787791.png', 'afternoon_time_out', '2026-03-06 09:03:11'),
+(2618, 52, 850, 'uploads/faces/face_52_1772787814.png', 'afternoon_time_out', '2026-03-06 09:03:34'),
+(2619, 59, 862, 'uploads/faces/face_59_1772787830.png', 'afternoon_time_out', '2026-03-06 09:03:50'),
+(2620, 68, 859, 'uploads/faces/face_68_1772787847.png', 'afternoon_time_out', '2026-03-06 09:04:07'),
+(2621, 70, 852, 'uploads/faces/face_70_1772787859.png', 'afternoon_time_in', '2026-03-06 09:04:20'),
+(2622, 70, 852, 'uploads/faces/face_70_1772787872.png', 'afternoon_time_out', '2026-03-06 09:04:32'),
+(2623, 71, 851, 'uploads/faces/face_71_1772787891.png', 'afternoon_time_out', '2026-03-06 09:04:51'),
+(2624, 64, 857, 'uploads/faces/face_64_1772787920.png', 'afternoon_time_out', '2026-03-06 09:05:20'),
+(2625, 53, 856, 'uploads/faces/face_53_1772787937.png', 'afternoon_time_out', '2026-03-06 09:05:37'),
+(2626, 57, 849, 'uploads/faces/face_57_1772787958.png', 'afternoon_time_out', '2026-03-06 09:05:58'),
+(2627, 63, 847, 'uploads/faces/face_63_1772788404.png', 'afternoon_time_out', '2026-03-06 09:13:24'),
+(2628, 62, 848, 'uploads/faces/face_62_1772788425.png', 'afternoon_time_out', '2026-03-06 09:13:45'),
+(2629, 60, 858, 'uploads/faces/face_60_1772789260.png', 'afternoon_time_out', '2026-03-06 09:27:40'),
+(2630, 61, 861, 'uploads/faces/face_61_1772789284.png', 'afternoon_time_out', '2026-03-06 09:28:04'),
+(2631, 58, 854, 'uploads/faces/face_58_1772790817.png', 'afternoon_time_out', '2026-03-06 09:53:37'),
+(2632, 58, 863, 'uploads/faces/face_58_1773013203.png', 'morning_time_in', '2026-03-08 23:40:03'),
+(2633, 61, 864, 'uploads/faces/face_61_1773013255.png', 'morning_time_in', '2026-03-08 23:40:55'),
+(2634, 65, 865, 'uploads/faces/face_65_1773013354.png', 'morning_time_in', '2026-03-08 23:42:34'),
+(2635, 57, 866, 'uploads/faces/face_57_1773013587.png', 'morning_time_in', '2026-03-08 23:46:27'),
+(2636, 64, 867, 'uploads/faces/face_64_1773014027.png', 'morning_time_in', '2026-03-08 23:53:47'),
+(2637, 75, 868, 'uploads/faces/face_75_1773014046.png', 'morning_time_in', '2026-03-08 23:54:06'),
+(2638, 74, 869, 'uploads/faces/face_74_1773014067.png', 'morning_time_in', '2026-03-08 23:54:27'),
+(2639, 67, 870, 'uploads/faces/face_67_1773015192.png', 'morning_time_in', '2026-03-09 00:13:12'),
+(2640, 66, 871, 'uploads/faces/face_66_1773015339.png', 'morning_time_in', '2026-03-09 00:15:39'),
+(2641, 59, 872, 'uploads/faces/face_59_1773015354.png', 'morning_time_in', '2026-03-09 00:15:54'),
+(2642, 62, 873, 'uploads/faces/face_62_1773016967.png', 'morning_time_in', '2026-03-09 00:42:47'),
+(2643, 60, 874, 'uploads/faces/face_60_1773016985.png', 'morning_time_in', '2026-03-09 00:43:05'),
+(2644, 63, 875, 'uploads/faces/face_63_1773017000.png', 'morning_time_in', '2026-03-09 00:43:20'),
+(2645, 72, 876, 'uploads/faces/face_72_1773017026.png', 'morning_time_in', '2026-03-09 00:43:47'),
+(2646, 73, 877, 'uploads/faces/face_73_1773017369.png', 'morning_time_in', '2026-03-09 00:49:29'),
+(2647, 60, 874, 'uploads/faces/face_60_1773028833.png', 'afternoon_time_out', '2026-03-09 04:00:33'),
+(2648, 62, 873, 'uploads/faces/face_62_1773028846.png', 'afternoon_time_out', '2026-03-09 04:00:46'),
+(2649, 63, 875, 'uploads/faces/face_63_1773028863.png', 'afternoon_time_out', '2026-03-09 04:01:03'),
+(2650, 61, 864, 'uploads/faces/face_61_1773028881.png', 'afternoon_time_out', '2026-03-09 04:01:21'),
+(2651, 66, 871, 'uploads/faces/face_66_1773028899.png', 'afternoon_time_out', '2026-03-09 04:01:39'),
+(2652, 67, 870, 'uploads/faces/face_67_1773028919.png', 'afternoon_time_out', '2026-03-09 04:01:59'),
+(2653, 65, 865, 'uploads/faces/face_65_1773028942.png', 'afternoon_time_out', '2026-03-09 04:02:22'),
+(2654, 75, 868, 'uploads/faces/face_75_1773028965.png', 'afternoon_time_out', '2026-03-09 04:02:45'),
+(2655, 75, 868, 'uploads/faces/face_75_1773028973.png', 'afternoon_time_out', '2026-03-09 04:02:53'),
+(2656, 74, 869, 'uploads/faces/face_74_1773029002.png', 'afternoon_time_out', '2026-03-09 04:03:22'),
+(2657, 59, 872, 'uploads/faces/face_59_1773029016.png', 'afternoon_time_out', '2026-03-09 04:03:36'),
+(2658, 73, 877, 'uploads/faces/face_73_1773029049.png', 'afternoon_time_out', '2026-03-09 04:04:09'),
+(2659, 72, 876, 'uploads/faces/face_72_1773029075.png', 'afternoon_time_out', '2026-03-09 04:04:35'),
+(2660, 58, 863, 'uploads/faces/face_58_1773029094.png', 'afternoon_time_in', '2026-03-09 04:04:54'),
+(2661, 57, 866, 'uploads/faces/face_57_1773029110.png', 'afternoon_time_out', '2026-03-09 04:05:10'),
+(2662, 63, 875, 'uploads/faces/face_63_1773029892.png', 'afternoon_time_in', '2026-03-09 04:18:12'),
+(2663, 62, 873, 'uploads/faces/face_62_1773029918.png', 'afternoon_time_in', '2026-03-09 04:18:38'),
+(2664, 65, 865, 'uploads/faces/face_65_1773030206.png', 'afternoon_time_in', '2026-03-09 04:23:26'),
+(2665, 57, 866, 'uploads/faces/face_57_1773030722.png', 'afternoon_time_in', '2026-03-09 04:32:02'),
+(2666, 58, 863, 'uploads/faces/face_58_1773030744.png', 'afternoon_time_in', '2026-03-09 04:32:24'),
+(2667, 58, 863, 'uploads/faces/face_58_1773030777.png', 'afternoon_time_out', '2026-03-09 04:32:57'),
+(2668, 58, 863, 'uploads/faces/face_58_1773030796.png', 'afternoon_time_in', '2026-03-09 04:33:16'),
+(2669, 74, 869, 'uploads/faces/face_74_1773030868.png', 'afternoon_time_in', '2026-03-09 04:34:28'),
+(2670, 72, 876, 'uploads/faces/face_72_1773031400.png', 'afternoon_time_in', '2026-03-09 04:43:20'),
+(2671, 73, 877, 'uploads/faces/face_73_1773031421.png', 'afternoon_time_in', '2026-03-09 04:43:41'),
+(2672, 75, 868, 'uploads/faces/face_75_1773031441.png', 'afternoon_time_in', '2026-03-09 04:44:01'),
+(2673, 60, 874, 'uploads/faces/face_60_1773031508.png', 'afternoon_time_in', '2026-03-09 04:45:08'),
+(2674, 61, 864, 'uploads/faces/face_61_1773031525.png', 'afternoon_time_in', '2026-03-09 04:45:25'),
+(2675, 67, 870, 'uploads/faces/face_67_1773032093.png', 'afternoon_time_in', '2026-03-09 04:54:53'),
+(2676, 59, 872, 'uploads/faces/face_59_1773032201.png', 'afternoon_time_in', '2026-03-09 04:56:41'),
+(2677, 66, 871, 'uploads/faces/face_66_1773032364.png', 'afternoon_time_in', '2026-03-09 04:59:24'),
+(2678, 62, 873, 'uploads/faces/face_62_1773046812.png', 'afternoon_time_out', '2026-03-09 09:00:12'),
+(2679, 63, 875, 'uploads/faces/face_63_1773046831.png', 'afternoon_time_out', '2026-03-09 09:00:31'),
+(2680, 60, 874, 'uploads/faces/face_60_1773046859.png', 'afternoon_time_out', '2026-03-09 09:00:59'),
+(2681, 61, 864, 'uploads/faces/face_61_1773046876.png', 'afternoon_time_out', '2026-03-09 09:01:16'),
+(2682, 65, 865, 'uploads/faces/face_65_1773046916.png', 'afternoon_time_out', '2026-03-09 09:01:56'),
+(2683, 64, 867, 'uploads/faces/face_64_1773047008.png', 'afternoon_time_out', '2026-03-09 09:03:28'),
+(2684, 59, 872, 'uploads/faces/face_59_1773047030.png', 'afternoon_time_out', '2026-03-09 09:03:50'),
+(2685, 66, 871, 'uploads/faces/face_66_1773047223.png', 'afternoon_time_out', '2026-03-09 09:07:03'),
+(2686, 67, 870, 'uploads/faces/face_67_1773047438.png', 'afternoon_time_out', '2026-03-09 09:10:38'),
+(2687, 57, 866, 'uploads/faces/face_57_1773047511.png', 'afternoon_time_out', '2026-03-09 09:11:51'),
+(2688, 74, 869, 'uploads/faces/face_74_1773047787.png', 'afternoon_time_out', '2026-03-09 09:16:27'),
+(2689, 75, 868, 'uploads/faces/face_75_1773047851.png', 'afternoon_time_out', '2026-03-09 09:17:31'),
+(2690, 58, 863, 'uploads/faces/face_58_1773048575.png', 'afternoon_time_out', '2026-03-09 09:29:35'),
+(2691, 72, 876, 'uploads/faces/face_72_1773048629.png', 'afternoon_time_out', '2026-03-09 09:30:29'),
+(2692, 73, 877, 'uploads/faces/face_73_1773048704.png', 'afternoon_time_out', '2026-03-09 09:31:44'),
+(2693, 62, 878, 'uploads/faces/face_62_1773099129.png', 'morning_time_in', '2026-03-09 23:32:09'),
+(2694, 63, 879, 'uploads/faces/face_63_1773099145.png', 'morning_time_in', '2026-03-09 23:32:25'),
+(2695, 61, 880, 'uploads/faces/face_61_1773099332.png', 'morning_time_in', '2026-03-09 23:35:33'),
+(2696, 57, 881, 'uploads/faces/face_57_1773100334.png', 'morning_time_in', '2026-03-09 23:52:14'),
+(2697, 64, 882, 'uploads/faces/face_64_1773100351.png', 'morning_time_in', '2026-03-09 23:52:32'),
+(2698, 66, 883, 'uploads/faces/face_66_1773100547.png', 'morning_time_in', '2026-03-09 23:55:47'),
+(2699, 74, 884, 'uploads/faces/face_74_1773100840.png', 'morning_time_in', '2026-03-10 00:00:41'),
+(2700, 67, 885, 'uploads/faces/face_67_1773100858.png', 'morning_time_in', '2026-03-10 00:00:58'),
+(2701, 58, 886, 'uploads/faces/face_58_1773100976.png', 'morning_time_in', '2026-03-10 00:02:57'),
+(2702, 72, 887, 'uploads/faces/face_72_1773101207.png', 'morning_time_in', '2026-03-10 00:06:47'),
+(2703, 71, 888, 'uploads/faces/face_71_1773101222.png', 'morning_time_in', '2026-03-10 00:07:02'),
+(2704, 65, 889, 'uploads/faces/face_65_1773101236.png', 'morning_time_in', '2026-03-10 00:07:16'),
+(2705, 70, 890, 'uploads/faces/face_70_1773101290.png', 'morning_time_in', '2026-03-10 00:08:10'),
+(2706, 60, 891, 'uploads/faces/face_60_1773101308.png', 'morning_time_in', '2026-03-10 00:08:28'),
+(2707, 73, 892, 'uploads/faces/face_73_1773101698.png', 'morning_time_in', '2026-03-10 00:14:58'),
+(2708, 59, 893, 'uploads/faces/face_59_1773101711.png', 'morning_time_in', '2026-03-10 00:15:11'),
+(2709, 56, 894, 'uploads/faces/face_56_1773102108.png', 'morning_time_in', '2026-03-10 00:21:48'),
+(2710, 75, 895, 'uploads/faces/face_75_1773102250.png', 'morning_time_in', '2026-03-10 00:24:10'),
+(2711, 68, 896, 'uploads/faces/face_68_1773107050.png', 'morning_time_in', '2026-03-10 01:44:10'),
+(2712, 71, 897, 'uploads/faces/face_71_1773615619.png', 'morning_time_in', '2026-03-15 23:00:19'),
+(2713, 71, 897, 'uploads/faces/face_71_1773633650.png', 'afternoon_time_out', '2026-03-16 04:00:50'),
+(2714, 71, 897, 'uploads/faces/face_71_1773637254.png', 'afternoon_time_in', '2026-03-16 05:00:54'),
+(2715, 71, 897, 'uploads/faces/face_71_1773655222.png', 'afternoon_time_out', '2026-03-16 10:00:22'),
+(2716, 71, 898, 'uploads/faces/face_71_1773701906.png', 'morning_time_in', '2026-03-16 22:58:26'),
+(2717, 71, 898, 'uploads/faces/face_71_1773720066.png', 'afternoon_time_out', '2026-03-17 04:01:06'),
+(2718, 71, 898, 'uploads/faces/face_71_1773723669.png', 'afternoon_time_in', '2026-03-17 05:01:09'),
+(2719, 71, 898, 'uploads/faces/face_71_1773734501.png', 'afternoon_time_out', '2026-03-17 08:01:41'),
+(2720, 71, 899, 'uploads/faces/face_71_1773873103.png', 'morning_time_in', '2026-03-18 22:31:43'),
+(2721, 71, 899, 'uploads/faces/face_71_1773892829.png', 'afternoon_time_out', '2026-03-19 04:00:29'),
+(2722, 71, 899, 'uploads/faces/face_71_1773896458.png', 'afternoon_time_in', '2026-03-19 05:00:58'),
+(2723, 71, 899, 'uploads/faces/face_71_1773907295.png', 'afternoon_time_out', '2026-03-19 08:01:35'),
+(2724, 71, 900, 'uploads/faces/face_71_1774309392.png', 'morning_time_in', '2026-03-23 23:43:13'),
+(2725, 71, 900, 'uploads/faces/face_71_1774336094.png', 'afternoon_time_in', '2026-03-24 07:08:14'),
+(2726, 71, 900, 'uploads/faces/face_71_1774324867.png', 'afternoon_time_out', '2026-03-24 04:01:07'),
+(2727, 71, 900, 'uploads/faces/face_71_1774328084.png', 'afternoon_time_in', '2026-03-24 04:54:44'),
+(2734, 71, 907, 'uploads/faces/face_71_1774479528.png', 'morning_time_in', '2026-03-25 22:58:48'),
+(2735, 71, 907, 'uploads/faces/face_71_1774492642.png', 'morning_time_out', '2026-03-26 02:37:22'),
+(2745, 71, 913, 'uploads/faces/face_71_1776119669.png', 'morning_time_in', '2026-04-13 22:34:29'),
+(2746, 71, 913, 'uploads/faces/face_71_1776139229.png', 'afternoon_time_out', '2026-04-14 04:00:29'),
+(2747, 71, 913, 'uploads/faces/face_71_1776141328.png', 'afternoon_time_in', '2026-04-14 04:35:28'),
+(2748, 71, 913, 'uploads/faces/face_71_1776163574.png', 'afternoon_time_out', '2026-04-14 10:46:14'),
+(2753, 78, 917, 'uploads/faces/face_78_1776312055.png', 'afternoon_time_out', '2026-04-16 04:00:55'),
+(2754, 71, 918, 'uploads/faces/face_71_1776294075.png', 'morning_time_in', '2026-04-15 23:01:16'),
+(2755, 71, 918, 'uploads/faces/face_71_1776312069.png', 'afternoon_time_out', '2026-04-16 04:01:09'),
+(2756, 71, 918, 'uploads/faces/face_71_1776312360.png', 'afternoon_time_out', '2026-04-16 04:06:00'),
+(2757, 71, 918, 'uploads/faces/face_71_1776315641.png', 'afternoon_time_in', '2026-04-16 05:00:41'),
+(2773, 71, 925, 'uploads/faces/face_71_1776733455.png', 'morning_time_in', '2026-04-21 01:04:15'),
+(2774, 71, 925, 'uploads/faces/face_71_1776744279.png', 'afternoon_time_out', '2026-04-21 04:04:39'),
+(2775, 71, 925, 'uploads/faces/face_71_1776747300.png', 'afternoon_time_in', '2026-04-21 04:55:00'),
+(2776, 71, 925, 'uploads/faces/face_71_1776767730.png', 'afternoon_time_out', '2026-04-21 10:35:30'),
+(2777, 71, 925, 'uploads/faces/face_71_1776769388.png', 'afternoon_time_out', '2026-04-21 11:03:08'),
+(2778, 71, 925, 'uploads/faces/face_71_1776769738.png', 'afternoon_time_out', '2026-04-21 11:08:58'),
+(2779, 71, 925, 'uploads/faces/face_71_1776769571.png', 'afternoon_time_out', '2026-04-21 11:06:11'),
+(2780, 71, 925, 'uploads/faces/face_71_1776769893.png', 'afternoon_time_out', '2026-04-21 11:11:33'),
+(2781, 71, 925, 'uploads/faces/face_71_1776770128.png', 'afternoon_time_out', '2026-04-21 11:15:28'),
+(2782, 71, 925, 'uploads/faces/face_71_1776770502.png', 'afternoon_time_out', '2026-04-21 11:21:42');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `time_adjustments`
+--
+
+CREATE TABLE `time_adjustments` (
+  `id` int(11) NOT NULL,
+  `record_id` int(11) NOT NULL,
+  `intern_id` int(11) NOT NULL,
+  `time_field` varchar(50) NOT NULL,
+  `previous_value` time DEFAULT NULL,
+  `new_value` time NOT NULL,
+  `adjusted_by` varchar(50) DEFAULT NULL,
+  `adjustment_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `time_adjustments`
+--
+
+INSERT INTO `time_adjustments` (`id`, `record_id`, `intern_id`, `time_field`, `previous_value`, `new_value`, `adjusted_by`, `adjustment_date`) VALUES
+(1, 97, 12, 'pm_timein', '13:36:14', '07:36:00', 'Supervisor', '2025-05-29 06:46:25'),
+(2, 97, 12, 'pm_timein', '07:36:00', '07:36:00', 'Supervisor', '2025-05-29 06:46:30'),
+(3, 144, 34, 'am_timeOut', '08:10:59', '12:10:00', 'Supervisor', '2025-08-05 04:15:25'),
+(4, 144, 34, 'am_timein', '08:00:00', '09:10:00', 'Supervisor', '2025-08-05 04:15:36'),
+(5, 149, 40, 'am_timeOut', '08:10:36', '12:10:00', 'Supervisor', '2025-08-05 04:16:01'),
+(6, 149, 40, 'am_timein', '08:00:00', '10:00:00', 'Supervisor', '2025-08-05 04:16:20'),
+(7, 150, 35, 'am_timeOut', '09:18:46', '12:18:00', 'Supervisor', '2025-08-05 04:16:46'),
+(8, 150, 35, 'am_timein', '08:03:25', '10:03:00', 'Supervisor', '2025-08-05 04:16:55'),
+(9, 148, 36, 'am_timeOut', '09:19:05', '12:19:00', 'Supervisor', '2025-08-05 04:17:19'),
+(10, 148, 36, 'am_timein', '08:00:00', '10:00:00', 'Supervisor', '2025-08-05 04:17:28'),
+(11, 155, 37, 'am_timeOut', '09:18:27', '12:18:00', 'Supervisor', '2025-08-05 04:17:46'),
+(12, 155, 37, 'am_timein', '08:25:26', '10:00:00', 'Supervisor', '2025-08-05 04:17:58'),
+(13, 123, 33, 'am_timein', '11:19:12', '08:19:00', 'Supervisor', '2025-08-07 01:58:38'),
+(14, 123, 33, 'am_timeOut', '12:05:08', '12:19:00', 'Supervisor', '2025-08-07 01:59:09'),
+(15, 123, 33, 'pm_timein', '13:04:17', '13:00:00', 'Supervisor', '2025-08-07 01:59:32'),
+(16, 158, 33, 'am_timeOut', '12:04:38', '12:50:00', 'Supervisor', '2025-08-07 01:59:55'),
+(17, 158, 33, 'pm_timeout', '15:05:39', '15:45:00', 'Supervisor', '2025-08-07 02:04:42'),
+(18, 208, 33, 'pm_timeout', '16:28:57', '16:45:00', 'Supervisor', '2025-08-07 08:33:04'),
+(19, 233, 33, 'am_timein', '00:00:00', '09:02:00', 'Supervisor', '2025-08-08 07:40:03'),
+(20, 233, 33, 'am_timein', '09:02:00', '00:00:00', 'Supervisor', '2025-08-08 07:40:32'),
+(21, 233, 33, 'am_timein', '00:00:00', '09:08:00', 'Supervisor', '2025-08-08 08:38:25'),
+(22, 233, 33, 'am_timeOut', '00:00:00', '12:35:00', 'Supervisor', '2025-08-08 08:38:50'),
+(23, 233, 33, 'am_timein', '09:08:00', '08:35:00', 'Supervisor', '2025-08-08 08:39:16'),
+(24, 272, 23, 'am_timein', '11:59:36', '08:07:00', 'Supervisor', '2025-08-29 07:59:13'),
+(25, 543, 37, 'am_timein', '00:00:00', '09:13:00', 'Supervisor', '2025-09-26 04:54:44'),
+(26, 543, 37, 'am_timeOut', '00:00:00', '12:30:00', 'Supervisor', '2025-09-26 04:55:04'),
+(27, 658, 57, 'am_timeOut', '07:56:37', '00:00:00', 'Supervisor', '2026-02-05 04:48:43'),
+(28, 658, 57, 'am_timeOut', '00:00:00', '12:00:00', 'Supervisor', '2026-02-05 04:48:59');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `daily_pictures`
+--
+ALTER TABLE `daily_pictures`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `intern_id` (`intern_id`);
+
+--
+-- Indexes for table `face_captures`
+--
+ALTER TABLE `face_captures`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `intern_id` (`intern_id`),
+  ADD KEY `record_id` (`record_id`);
+
+--
+-- Indexes for table `interns`
+--
+ALTER TABLE `interns`
+  ADD PRIMARY KEY (`Intern_id`);
+
+--
+-- Indexes for table `intern_custom_limits`
+--
+ALTER TABLE `intern_custom_limits`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_intern_date` (`intern_id`,`effective_date`);
+
+--
+-- Indexes for table `intern_notes`
+--
+ALTER TABLE `intern_notes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `intern_date` (`intern_id`,`note_date`);
+
+--
+-- Indexes for table `intern_photos`
+--
+ALTER TABLE `intern_photos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `intern_id` (`intern_id`);
+
+--
+-- Indexes for table `pause_history`
+--
+ALTER TABLE `pause_history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `intern_id` (`intern_id`);
+
+--
+-- Indexes for table `settings_history`
+--
+ALTER TABLE `settings_history`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `system_settings`
+--
+ALTER TABLE `system_settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `setting_key` (`setting_key`);
+
+--
+-- Indexes for table `timesheet`
+--
+ALTER TABLE `timesheet`
+  ADD PRIMARY KEY (`record_id`);
+
+--
+-- Indexes for table `timesheet_photos`
+--
+ALTER TABLE `timesheet_photos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `intern_id` (`intern_id`);
+
+--
+-- Indexes for table `time_adjustments`
+--
+ALTER TABLE `time_adjustments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `daily_pictures`
+--
+ALTER TABLE `daily_pictures`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `face_captures`
+--
+ALTER TABLE `face_captures`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `interns`
+--
+ALTER TABLE `interns`
+  MODIFY `Intern_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+
+--
+-- AUTO_INCREMENT for table `intern_custom_limits`
+--
+ALTER TABLE `intern_custom_limits`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `intern_notes`
+--
+ALTER TABLE `intern_notes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `intern_photos`
+--
+ALTER TABLE `intern_photos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pause_history`
+--
+ALTER TABLE `pause_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `settings_history`
+--
+ALTER TABLE `settings_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `system_settings`
+--
+ALTER TABLE `system_settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `timesheet`
+--
+ALTER TABLE `timesheet`
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=926;
+
+--
+-- AUTO_INCREMENT for table `timesheet_photos`
+--
+ALTER TABLE `timesheet_photos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2783;
+
+--
+-- AUTO_INCREMENT for table `time_adjustments`
+--
+ALTER TABLE `time_adjustments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `daily_pictures`
+--
+ALTER TABLE `daily_pictures`
+  ADD CONSTRAINT `daily_pictures_ibfk_1` FOREIGN KEY (`intern_id`) REFERENCES `interns` (`Intern_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `face_captures`
+--
+ALTER TABLE `face_captures`
+  ADD CONSTRAINT `fk_face_captures_intern` FOREIGN KEY (`intern_id`) REFERENCES `interns` (`Intern_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_face_captures_record` FOREIGN KEY (`record_id`) REFERENCES `timesheet` (`record_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `intern_custom_limits`
+--
+ALTER TABLE `intern_custom_limits`
+  ADD CONSTRAINT `intern_custom_limits_ibfk_1` FOREIGN KEY (`intern_id`) REFERENCES `interns` (`Intern_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `intern_photos`
+--
+ALTER TABLE `intern_photos`
+  ADD CONSTRAINT `intern_photos_ibfk_1` FOREIGN KEY (`intern_id`) REFERENCES `interns` (`Intern_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pause_history`
+--
+ALTER TABLE `pause_history`
+  ADD CONSTRAINT `pause_history_ibfk_1` FOREIGN KEY (`intern_id`) REFERENCES `interns` (`Intern_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
